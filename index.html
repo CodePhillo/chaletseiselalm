@@ -1,6 +1,6 @@
-<!DOCTYPE html>
-<html lang="de">
-<head>
+<!DOCTYPE html><html lang="de"><head>
+
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Chalet Seiser Alm — Ferienhaus Dolomiten, Südtirol</title>
@@ -57,8 +57,8 @@
 }
 </script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&amp;family=Montserrat:wght@300;400;500&amp;family=Playfair+Display:ital,wght@0,400;0,500;1,400&amp;family=Work+Sans:wght@300;400;500&amp;family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,400&amp;family=Inter:wght@300;400;500&amp;family=Merriweather:ital,wght@0,300;0,400;1,300;1,400&amp;display=swap" rel="stylesheet">
 <style>
 /* ═══════════════════════════════════════
    RESET & BASE
@@ -66,40 +66,94 @@
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 html { scroll-behavior: smooth; }
 body {
-  font-family: 'Montserrat', sans-serif;
+  font-family: var(--font-body, 'Montserrat', sans-serif);
   font-weight: 300;
-  background: #f5f2ee;
-  color: #1a1a18;
+  background: var(--grund);
+  color: var(--patina);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
+  transition: background 0.5s ease, color 0.5s ease;
 }
 img { display: block; width: 100%; height: 100%; object-fit: cover; }
 a { color: inherit; text-decoration: none; }
-button { font-family: inherit; cursor: pointer; border: none; background: none; }
+button { font-family: inherit; cursor: pointer; border: none; background: none; color: inherit; }
 
 /* ═══════════════════════════════════════
-   DESIGN TOKENS
+   DESIGN TOKENS — PALETTES
    ═══════════════════════════════════════ */
 :root {
+  /* default: warm stone (original) */
   --grund:   #f5f2ee;
   --flaeche: #f0ebe3;
   --waerme:  #ecddd5;
   --stein:   #8a8278;
   --patina:  #1a1a18;
-  --gold:    #b8924a;
+  --gold:    rgb(206, 75, 75);
   --leinen:  #2a2520;
   --licht:   #1a1a18;
+  --accent:  rgb(206, 75, 75);
+  --panel-bg: rgba(245,242,238,0.95);
+
+  /* typography */
+  --font-display: 'Cormorant Garamond', serif;
+  --font-body: 'Montserrat', sans-serif;
+
+  /* seasonal image filter */
+  --img-filter: none;
+}
+
+body[data-palette="cool"] {
+  --grund:   #eef1f3;
+  --flaeche: #e2e7eb;
+  --waerme:  #d7dde2;
+  --stein:   #79848d;
+  --patina:  #1d2429;
+  --gold:    #6d8a9c;
+  --leinen:  #232b31;
+  --accent:  var(--gold);
+  --panel-bg: rgba(238,241,243,0.95);
+}
+body[data-palette="mono"] {
+  --grund:   #efeeec;
+  --flaeche: #e6e4e0;
+  --waerme:  #d6d3cd;
+  --stein:   #7a7772;
+  --patina:  #181715;
+  --gold:    #2a2520;
+  --leinen:  #1a1917;
+  --accent:  #2a2520;
+  --panel-bg: rgba(239,238,236,0.95);
+}
+
+body[data-season="winter"] {
+  --img-filter: saturate(0.5) brightness(1.08) contrast(0.95) hue-rotate(-8deg);
+}
+
+body[data-typo="editorial"] {
+  --font-display: 'Cormorant Garamond', serif;
+  --font-body: 'Montserrat', sans-serif;
+}
+body[data-typo="classic"] {
+  --font-display: 'Playfair Display', serif;
+  --font-body: 'Work Sans', sans-serif;
+}
+body[data-typo="grotesk"] {
+  --font-display: 'Fraunces', serif;
+  --font-body: 'Inter', sans-serif;
+}
+body[data-typo="allserif"] {
+  --font-display: 'Cormorant Garamond', serif;
+  --font-body: 'Cormorant Garamond', serif;
 }
 
 /* ═══════════════════════════════════════
    TYPOGRAPHY
    ═══════════════════════════════════════ */
-.font-display { font-family: 'Cormorant Garamond', serif; font-weight: 300; }
-.font-display i, .font-display em { font-style: italic; font-weight: 300; }
+.font-display { font-family: var(--font-display); font-weight: 300; }
 
 .eyebrow {
-  font-family: 'Montserrat', sans-serif;
+  font-family: var(--font-body);
   font-size: 0.72rem;
   font-weight: 400;
   text-transform: uppercase;
@@ -109,13 +163,14 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 }
 
 h1, h2, h3 {
-  font-family: 'Cormorant Garamond', serif;
+  font-family: var(--font-display);
   font-weight: 300;
   line-height: 1.1;
 }
-h1 { font-size: clamp(3.2rem, 8vw, 7rem); color: #2a2520; }
+h1 { font-size: clamp(3.2rem, 8vw, 7rem); color: var(--leinen); }
 h2 { font-size: clamp(2.4rem, 5vw, 4.2rem); color: var(--leinen); }
 h3 { font-size: clamp(1.4rem, 2.5vw, 1.8rem); color: var(--leinen); margin-bottom: 24px; }
+h1 em, h2 em, h3 em { font-style: italic; font-weight: 300; }
 
 .body-text {
   font-size: 0.95rem;
@@ -128,9 +183,14 @@ h3 { font-size: clamp(1.4rem, 2.5vw, 1.8rem); color: var(--leinen); margin-botto
 .divider {
   width: 48px;
   height: 1px;
-  background: rgba(0,0,0,0.12);
+  background: color-mix(in srgb, var(--patina) 20%, transparent);
   margin: 32px 0 48px;
 }
+
+/* ═══════════════════════════════════════
+   IMAGE FILTER (seasonal)
+   ═══════════════════════════════════════ */
+.seasonal-img { filter: var(--img-filter); transition: filter 0.8s ease; }
 
 /* ═══════════════════════════════════════
    NAVIGATION
@@ -143,7 +203,7 @@ h3 { font-size: clamp(1.4rem, 2.5vw, 1.8rem); color: var(--leinen); margin-botto
   transition: background 0.4s ease, box-shadow 0.4s ease;
 }
 .nav.scrolled {
-  background: rgba(245,242,238,0.95);
+  background: var(--panel-bg);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
 }
@@ -155,7 +215,7 @@ h3 { font-size: clamp(1.4rem, 2.5vw, 1.8rem); color: var(--leinen); margin-botto
   gap: 12px;
 }
 .nav-lang button {
-  font-family: 'Montserrat', sans-serif;
+  font-family: var(--font-body);
   font-size: 0.68rem;
   font-weight: 400;
   color: var(--patina);
@@ -163,9 +223,8 @@ h3 { font-size: clamp(1.4rem, 2.5vw, 1.8rem); color: var(--leinen); margin-botto
   transition: color 0.3s;
   padding: 2px 4px;
 }
-.nav-lang button.active { color: var(--gold); }
-.nav-lang button:hover { color: var(--gold); }
-.nav-lang button:last-child { padding-right: 0; }
+.nav-lang button.active { color: var(--accent); }
+.nav-lang button:hover { color: var(--accent); }
 
 .nav-inner {
   display: flex;
@@ -174,7 +233,7 @@ h3 { font-size: clamp(1.4rem, 2.5vw, 1.8rem); color: var(--leinen); margin-botto
   height: 60px;
 }
 .nav-wordmark {
-  font-family: 'Cormorant Garamond', serif;
+  font-family: var(--font-display);
   font-weight: 300;
   font-size: 1.5rem;
   letter-spacing: 0.01em;
@@ -188,18 +247,31 @@ h3 { font-size: clamp(1.4rem, 2.5vw, 1.8rem); color: var(--leinen); margin-botto
   list-style: none;
 }
 .nav-links a {
-  font-family: 'Montserrat', sans-serif;
+  position: relative;
+  font-family: var(--font-body);
   font-size: 0.75rem;
   font-weight: 400;
   text-transform: uppercase;
   letter-spacing: 0.12em;
   color: var(--patina);
   transition: color 0.3s;
+  padding-bottom: 4px;
 }
-.nav-links a:hover { color: var(--leinen); }
+.nav-links a::after {
+  content: '';
+  position: absolute;
+  left: 0; bottom: 0;
+  height: 1px;
+  width: 0;
+  background: var(--accent);
+  transition: width 0.3s ease;
+}
+.nav-links a:hover::after,
+.nav-links a.active::after { width: 100%; }
+.nav-links a.active { color: var(--leinen); }
 
 .nav-cta {
-  font-family: 'Montserrat', sans-serif;
+  font-family: var(--font-body);
   font-size: 0.72rem;
   font-weight: 400;
   text-transform: uppercase;
@@ -235,12 +307,11 @@ h3 { font-size: clamp(1.4rem, 2.5vw, 1.8rem); color: var(--leinen); margin-botto
 .nav-hamburger.open span:nth-child(2) { opacity: 0; }
 .nav-hamburger.open span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
 
-/* Mobile overlay */
 .nav-mobile-overlay {
   display: none;
   position: fixed;
-  top: 0; left: 0; right: 0; bottom: 0;
-  background: rgba(245,242,238,0.97);
+  inset: 0;
+  background: var(--panel-bg);
   z-index: 999;
   flex-direction: column;
   align-items: center;
@@ -249,15 +320,33 @@ h3 { font-size: clamp(1.4rem, 2.5vw, 1.8rem); color: var(--leinen); margin-botto
 }
 .nav-mobile-overlay.open { display: flex; }
 .nav-mobile-overlay a {
-  font-family: 'Montserrat', sans-serif;
+  font-family: var(--font-body);
   font-size: 0.85rem;
   font-weight: 300;
   text-transform: uppercase;
   letter-spacing: 0.18em;
   color: var(--patina);
+}
+
+/* Season toggle in nav */
+.season-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-right: 20px;
+  font-family: var(--font-body);
+  font-size: 0.68rem;
+  letter-spacing: 0.08em;
+  color: var(--stein);
+  text-transform: uppercase;
+}
+.season-toggle button {
+  padding: 2px 4px;
+  color: var(--stein);
   transition: color 0.3s;
 }
-.nav-mobile-overlay a:hover { color: var(--leinen); }
+.season-toggle button.active { color: var(--accent); }
+.season-toggle .sep { opacity: 0.5; }
 
 /* ═══════════════════════════════════════
    HERO
@@ -275,7 +364,8 @@ h3 { font-size: clamp(1.4rem, 2.5vw, 1.8rem); color: var(--leinen); margin-botto
 }
 .hero-img img {
   object-position: 70% center;
-  transition: transform 5s ease;
+  transition: transform 8s ease, filter 0.8s ease;
+  filter: var(--img-filter);
 }
 .hero:hover .hero-img img {
   transform: scale(1.04);
@@ -283,7 +373,7 @@ h3 { font-size: clamp(1.4rem, 2.5vw, 1.8rem); color: var(--leinen); margin-botto
 .hero-gradient {
   position: absolute;
   inset: 0;
-  background: linear-gradient(to top, #f0ebe3 0%, rgba(240,235,227,0.5) 25%, rgba(240,235,227,0.1) 40%, transparent 60%);
+  background: linear-gradient(to top, var(--flaeche) 0%, color-mix(in srgb, var(--flaeche) 50%, transparent) 25%, color-mix(in srgb, var(--flaeche) 10%, transparent) 40%, transparent 60%);
   z-index: 1;
 }
 .hero-content {
@@ -291,16 +381,16 @@ h3 { font-size: clamp(1.4rem, 2.5vw, 1.8rem); color: var(--leinen); margin-botto
   bottom: 80px;
   left: 48px;
   z-index: 2;
+  max-width: 85%;
 }
 .hero-subtitle {
-  font-family: 'Montserrat', sans-serif;
+  font-family: var(--font-body);
   font-size: 0.85rem;
   font-weight: 300;
-  color: #4a3f35;
+  color: var(--leinen);
   margin-top: 24px;
   letter-spacing: 0.02em;
 }
-.hero .eyebrow { color: rgba(255,255,255,0.75); }
 .hero-scroll {
   position: absolute;
   bottom: 40px;
@@ -310,7 +400,7 @@ h3 { font-size: clamp(1.4rem, 2.5vw, 1.8rem); color: var(--leinen); margin-botto
   display: flex;
   align-items: center;
   gap: 16px;
-  font-family: 'Montserrat', sans-serif;
+  font-family: var(--font-body);
   font-size: 0.68rem;
   font-weight: 400;
   text-transform: uppercase;
@@ -320,27 +410,58 @@ h3 { font-size: clamp(1.4rem, 2.5vw, 1.8rem); color: var(--leinen); margin-botto
 .hero-scroll-line {
   width: 40px;
   height: 1px;
-  background: var(--gold);
+  background: var(--accent);
 }
 
+/* Hero variants */
+body[data-hero="typeled"] .hero {
+  background: var(--grund);
+  display: grid;
+  place-items: center;
+  text-align: center;
+}
+body[data-hero="typeled"] .hero-img { opacity: 0.18; }
+body[data-hero="typeled"] .hero-content {
+  position: relative;
+  bottom: auto; left: auto;
+  text-align: center;
+  max-width: 900px;
+}
+body[data-hero="typeled"] h1 { font-size: clamp(4rem, 12vw, 10rem); }
+
+body[data-hero="split"] .hero {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  background: var(--flaeche);
+}
+body[data-hero="split"] .hero-img { position: relative; inset: auto; }
+body[data-hero="split"] .hero-gradient { display: none; }
+body[data-hero="split"] .hero-content {
+  position: relative;
+  bottom: auto; left: auto;
+  padding: 0 48px;
+  align-self: center;
+  max-width: none;
+}
+body[data-hero="split"] .hero-scroll { display: none; }
+
 /* ═══════════════════════════════════════
-   SECTIONS — COMMON
+   SECTIONS
    ═══════════════════════════════════════ */
 section {
   padding: 140px 10%;
+  scroll-margin-top: 100px;
 }
 .section-intro { background: var(--flaeche); }
-.section-chalet { background: #fafaf8; }
-.section-highlights { background: #d4c4bc; }
+.section-chalet { background: color-mix(in srgb, var(--grund) 95%, white); }
+.section-highlights { background: var(--waerme); }
 .section-geschichte { position: relative; }
 .section-anreise { background: var(--grund); }
 .section-seiseralm { background: var(--flaeche); padding: 0; }
 .section-kontakt { background: var(--flaeche); }
 .site-footer { background: var(--grund); }
 
-/* ═══════════════════════════════════════
-   INTRO
-   ═══════════════════════════════════════ */
+/* INTRO */
 .intro-grid {
   display: grid;
   grid-template-columns: 2fr 3fr;
@@ -350,7 +471,7 @@ section {
   align-items: center;
 }
 .intro-quote {
-  font-family: 'Cormorant Garamond', serif;
+  font-family: var(--font-display);
   font-weight: 300;
   font-style: italic;
   font-size: 1.6rem;
@@ -361,42 +482,53 @@ section {
 .intro-img-wrap {
   height: 580px;
   overflow: hidden;
+  cursor: zoom-in;
 }
 .intro-img-wrap img {
-  transition: transform 5s ease;
+  transition: transform 5s ease, filter 0.8s ease;
+  filter: var(--img-filter);
 }
-.intro-img-wrap:hover img {
-  transform: scale(1.04);
-}
+.intro-img-wrap:hover img { transform: scale(1.04); }
 
-/* ═══════════════════════════════════════
-   CHALET — ROOMS
-   ═══════════════════════════════════════ */
-.rooms-container {
-  max-width: 1400px;
-  margin: 0 auto;
-}
+/* ROOMS */
+.rooms-container { max-width: 1400px; margin: 0 auto; }
 .room {
   display: grid;
   grid-template-columns: 3fr 2fr;
   gap: 80px;
   align-items: center;
 }
-.room + .room {
-  margin-top: 100px;
-}
+.room + .room { margin-top: 100px; }
 .room.reverse .room-img { order: 2; }
 .room.reverse .room-text { order: 1; }
 .room-img {
   height: 480px;
   overflow: hidden;
+  cursor: zoom-in;
+  position: relative;
 }
-.room-img img { transition: transform 5s ease; }
+.room-img img {
+  transition: transform 5s ease, filter 0.8s ease;
+  filter: var(--img-filter);
+}
 .room-img:hover img { transform: scale(1.04); }
+.room-img::after {
+  content: '⤢';
+  position: absolute;
+  top: 20px; right: 20px;
+  width: 36px; height: 36px;
+  display: grid; place-items: center;
+  background: var(--panel-bg);
+  color: var(--leinen);
+  border-radius: 50%;
+  font-size: 0.85rem;
+  opacity: 0;
+  transition: opacity 0.3s;
+  pointer-events: none;
+}
+.room-img:hover::after { opacity: 1; }
 
-/* ═══════════════════════════════════════
-   HIGHLIGHTS
-   ═══════════════════════════════════════ */
+/* HIGHLIGHTS */
 .highlights-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -406,26 +538,22 @@ section {
 }
 .highlight-card {
   padding: 56px 40px;
-  background: rgba(0,0,0,0.03);
+  background: color-mix(in srgb, var(--patina) 3%, transparent);
   transition: background 0.3s;
 }
-.highlight-card:hover {
-  background: rgba(0,0,0,0.06);
-}
+.highlight-card:hover { background: color-mix(in srgb, var(--patina) 6%, transparent); }
 .highlight-num {
-  font-family: 'Cormorant Garamond', serif;
+  font-family: var(--font-display);
   font-size: 3.5rem;
   font-weight: 300;
   color: var(--leinen);
-  opacity: 0.08;
+  opacity: 0.12;
   line-height: 1;
   margin-bottom: 24px;
 }
 .highlight-card .body-text { max-width: none; }
 
-/* ═══════════════════════════════════════
-   GESCHICHTE
-   ═══════════════════════════════════════ */
+/* GESCHICHTE */
 .section-geschichte {
   min-height: 90vh;
   display: flex;
@@ -437,17 +565,56 @@ section {
 .geschichte-overlay {
   position: absolute;
   inset: 0;
-  background: rgba(245,242,238,0.85);
+  background: color-mix(in srgb, var(--grund) 85%, transparent);
 }
 .geschichte-content {
   position: relative;
   z-index: 1;
   max-width: 640px;
 }
+.geschichte-inner {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: center;
+  width: 100%;
+  max-width: 1200px;
+}
+.geschichte-photo {
+  cursor: zoom-in;
+  overflow: hidden;
+  position: relative;
+}
+.geschichte-photo img {
+  width: 100%;
+  height: 420px;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+  filter: grayscale(1) contrast(1.05);
+  transition: transform 5s ease;
+}
+.geschichte-photo:hover img { transform: scale(1.03); }
+.geschichte-photo-caption {
+  font-family: var(--font-body);
+  font-size: 0.65rem;
+  font-weight: 400;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--stein);
+  margin-top: 16px;
+}
+@media (max-width: 1100px) {
+  .geschichte-inner {
+    grid-template-columns: 1fr;
+    gap: 48px;
+  }
+  .geschichte-photo img { height: 280px; }
+}
 
-/* ═══════════════════════════════════════
-   ANREISE
-   ═══════════════════════════════════════ */
+/* ANREISE */
 .anreise-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -457,57 +624,86 @@ section {
 }
 .anreise-block + .anreise-block { margin-top: 48px; }
 .anreise-block-label {
-  font-family: 'Montserrat', sans-serif;
+  font-family: var(--font-body);
   font-size: 0.65rem;
   font-weight: 400;
   text-transform: uppercase;
   letter-spacing: 0.22em;
-  color: var(--gold);
+  color: var(--accent);
   margin-bottom: 16px;
 }
-.gps-badge {
+.map-wrapper {
+  align-self: stretch;
+  position: relative;
+  overflow: hidden;
+  min-height: 500px;
+}
+.map-wrapper .leaflet-container {
+  height: 100%;
+  width: 100%;
+  background: var(--flaeche);
+}
+.map-wrapper .leaflet-tile-pane {
+  filter: grayscale(100%) brightness(1.05) contrast(0.95);
+}
+.map-nav-link {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  border: 1px solid var(--stein);
-  padding: 10px 20px;
-  margin-top: 32px;
-  font-family: 'Montserrat', sans-serif;
-  font-size: 0.75rem;
+  margin-top: 24px;
+  font-family: var(--font-body);
+  font-size: 0.7rem;
   font-weight: 400;
-  letter-spacing: 0.06em;
-  color: var(--patina);
-  transition: border-color 0.3s, color 0.3s;
-}
-.gps-badge:hover { border-color: var(--gold); color: var(--leinen); }
-
-.map-placeholder {
-  background: var(--flaeche);
-  height: 100%;
-  min-height: 500px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  gap: 16px;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
   color: var(--stein);
+  transition: color 0.3s;
 }
-.map-placeholder svg { opacity: 0.5; }
-.map-iframe-wrap {
-  height: 100%;
-  min-height: 500px;
+.map-nav-link:hover { color: var(--accent); }
+.map-nav-link svg {
+  width: 14px; height: 14px;
+  fill: none; stroke: currentColor; stroke-width: 1.5;
 }
-.map-iframe-wrap iframe {
-  width: 100%;
-  height: 100%;
-  min-height: 500px;
-  border: none;
-  filter: grayscale(1) brightness(0.95) contrast(1.05);
+.custom-marker {
+  background: none !important;
+  border: none !important;
+  width: 18px !important;
+  height: 18px !important;
+  position: relative;
+  overflow: visible;
+}
+.marker-label {
+  position: absolute;
+  bottom: calc(100% + 6px);
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  font-weight: 300;
+  line-height: 1.1;
+  letter-spacing: 0;
+  color: var(--accent);
+  white-space: nowrap;
+  background: var(--panel-bg);
+  padding: 6px 14px;
+  border-radius: 100px;
+  box-shadow: 0 1px 6px rgba(0,0,0,0.08);
+  pointer-events: none;
+}
+.marker-label em { font-style: italic; font-weight: 300; }
+.marker-dot {
+  position: absolute;
+  inset: 0;
+  width: 18px;
+  height: 18px;
+  background: var(--accent);
+  border-radius: 50%;
+  border: 3px solid var(--grund);
+  box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+  box-sizing: border-box;
 }
 
-/* ═══════════════════════════════════════
-   SEISER ALM
-   ═══════════════════════════════════════ */
+/* SEISER ALM */
 .seiseralm-grid {
   display: grid;
   grid-template-columns: 3fr 2fr;
@@ -515,8 +711,12 @@ section {
 }
 .seiseralm-img {
   overflow: hidden;
+  cursor: zoom-in;
 }
-.seiseralm-img img { transition: transform 5s ease; }
+.seiseralm-img img {
+  transition: transform 5s ease, filter 0.8s ease;
+  filter: var(--img-filter);
+}
 .seiseralm-img:hover img { transform: scale(1.04); }
 .seiseralm-text {
   display: flex;
@@ -525,9 +725,7 @@ section {
   padding: 80px 120px;
 }
 
-/* ═══════════════════════════════════════
-   KONTAKT
-   ═══════════════════════════════════════ */
+/* KONTAKT */
 .kontakt-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -535,29 +733,32 @@ section {
   max-width: 1400px;
   margin: 0 auto;
 }
-.kontakt-info-row {
-  margin-top: 40px;
-}
+.kontakt-info-row { margin-top: 40px; }
 .kontakt-info-row + .kontakt-info-row { margin-top: 16px; }
 .kontakt-label {
-  font-family: 'Montserrat', sans-serif;
+  font-family: var(--font-body);
   font-size: 0.65rem;
   font-weight: 400;
   text-transform: uppercase;
   letter-spacing: 0.2em;
-  color: var(--gold);
+  color: var(--accent);
   margin-bottom: 4px;
 }
-.kontakt-value {
-  font-size: 0.85rem;
-  color: var(--patina);
-}
+.kontakt-value { font-size: 0.85rem; color: var(--patina); }
+.kontakt-value a { transition: color 0.3s; }
+.kontakt-value a:hover { color: var(--accent); }
 
-/* Form */
-.contact-form { display: flex; flex-direction: column; gap: 32px; justify-content: center; }
+/* FORM */
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  justify-content: center;
+}
 .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
 .form-field { position: relative; }
 .form-field label {
+  font-family: var(--font-body);
   font-size: 0.65rem;
   font-weight: 400;
   text-transform: uppercase;
@@ -567,35 +768,71 @@ section {
   margin-bottom: 8px;
 }
 .form-field input,
-.form-field select,
 .form-field textarea {
   width: 100%;
   background: none;
   border: none;
   border-bottom: 1px solid var(--stein);
   padding: 10px 0;
-  font-family: 'Montserrat', sans-serif;
-  font-size: 0.85rem;
+  font-family: var(--font-body);
+  font-size: 0.95rem;
   font-weight: 300;
   color: var(--leinen);
   outline: none;
   transition: border-color 0.25s;
 }
 .form-field input:focus,
-.form-field select:focus,
-.form-field textarea:focus {
-  border-color: var(--gold);
-}
+.form-field textarea:focus { border-color: var(--accent); }
 .form-field input::placeholder,
-.form-field textarea::placeholder {
-  color: var(--stein);
-}
-.form-field select { cursor: pointer; }
-.form-field select option { background: var(--flaeche); color: var(--leinen); }
+.form-field textarea::placeholder { color: var(--stein); opacity: 0.6; }
 .form-field textarea { resize: none; height: 90px; }
+.form-field.has-error input,
+.form-field.has-error textarea,
+.form-field.has-error .stepper { border-color: #b84a3a; }
+.field-error {
+  display: none;
+  font-family: var(--font-body);
+  font-size: 0.72rem;
+  color: #b84a3a;
+  margin-top: 6px;
+  letter-spacing: 0.02em;
+}
+.form-field.has-error .field-error { display: block; }
+
+/* Guest stepper */
+.stepper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--stein);
+  padding: 6px 0;
+  transition: border-color 0.25s;
+}
+.stepper:focus-within { border-color: var(--accent); }
+.stepper-btn {
+  width: 28px; height: 28px;
+  border: 1px solid var(--stein);
+  border-radius: 50%;
+  display: grid; place-items: center;
+  color: var(--patina);
+  font-size: 0.95rem;
+  line-height: 1;
+  transition: border-color 0.3s, color 0.3s;
+  user-select: none;
+}
+.stepper-btn:hover:not(:disabled) { border-color: var(--accent); color: var(--accent); }
+.stepper-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+.stepper-value {
+  font-family: var(--font-display);
+  font-size: 1.6rem;
+  font-weight: 300;
+  color: var(--leinen);
+  min-width: 36px;
+  text-align: center;
+}
 
 .form-submit {
-  font-family: 'Montserrat', sans-serif;
+  font-family: var(--font-body);
   font-size: 0.72rem;
   font-weight: 400;
   text-transform: uppercase;
@@ -609,29 +846,47 @@ section {
   transition: background 0.3s, color 0.3s;
   align-self: flex-start;
 }
-.form-submit:hover {
-  background: var(--leinen);
-  color: var(--grund);
-}
+.form-submit:hover { background: var(--leinen); color: var(--grund); }
+.form-submit:disabled { opacity: 0.5; cursor: wait; }
 
-/* ═══════════════════════════════════════
-   FOOTER
-   ═══════════════════════════════════════ */
+/* Success state */
+.form-success {
+  display: none;
+  border: 1px solid var(--accent);
+  padding: 48px 32px;
+  text-align: center;
+}
+.form-success.show { display: block; }
+.form-success .success-mark {
+  width: 48px; height: 48px;
+  border: 1px solid var(--accent);
+  border-radius: 50%;
+  display: grid; place-items: center;
+  margin: 0 auto 24px;
+  color: var(--accent);
+  font-size: 1.4rem;
+}
+.form-success h3 { font-size: 1.4rem; margin-bottom: 16px; }
+.form-success p { font-size: 0.9rem; color: var(--patina); max-width: 44ch; margin: 0 auto; line-height: 1.7; }
+
+/* FOOTER */
 .site-footer {
-  border-top: 1px solid rgba(0,0,0,0.08);
+  border-top: 1px solid color-mix(in srgb, var(--patina) 8%, transparent);
   padding: 80px 48px;
   text-align: center;
 }
 .footer-wordmark {
-  font-family: 'Cormorant Garamond', serif;
+  font-family: var(--font-display);
   font-weight: 300;
-  font-size: 1.5rem;
-  letter-spacing: 0.3em;
-  color: var(--leinen);
-  text-transform: uppercase;
+  font-size: clamp(2.4rem, 5vw, 4.2rem);
+  line-height: 1.1;
+  letter-spacing: 0;
+  color: var(--accent);
   margin-bottom: 16px;
 }
+.footer-wordmark em { font-style: italic; font-weight: 300; }
 .footer-tagline {
+  font-family: var(--font-body);
   font-size: 0.62rem;
   font-weight: 400;
   letter-spacing: 0.15em;
@@ -645,6 +900,7 @@ section {
   gap: 24px;
 }
 .footer-links a {
+  font-family: var(--font-body);
   font-size: 0.62rem;
   font-weight: 400;
   text-transform: uppercase;
@@ -654,108 +910,87 @@ section {
 }
 .footer-links a:hover { color: var(--patina); }
 
-/* ═══════════════════════════════════════
-   MAPS CONSENT PLACEHOLDER
-   ═══════════════════════════════════════ */
-.map-wrapper {
-  align-self: stretch;
-  position: relative;
-  overflow: hidden;
-  min-height: 500px;
-}
-.map-wrapper .leaflet-container {
-  height: 100%;
-  width: 100%;
-  background: var(--flaeche);
-}
-.map-wrapper .leaflet-tile-pane {
-  filter: grayscale(100%) brightness(1.1) contrast(0.9);
-}
-.map-nav-link {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  margin-top: 16px;
-  font-family: 'Montserrat', sans-serif;
-  font-size: 0.7rem;
-  font-weight: 400;
-  text-transform: uppercase;
-  letter-spacing: 0.15em;
-  color: var(--stein);
-  transition: color 0.3s;
-}
-.map-nav-link:hover { color: var(--gold); }
-.map-nav-link svg {
-  width: 14px;
-  height: 14px;
-  fill: none;
-  stroke: currentColor;
-  stroke-width: 1.5;
-}
-.custom-marker {
-  background: none !important;
-  border: none !important;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-.marker-label {
-  font-family: 'Montserrat', sans-serif;
-  font-size: 0.65rem;
-  font-weight: 500;
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
-  color: var(--leinen);
-  white-space: nowrap;
-  margin-bottom: 6px;
-  background: rgba(245,242,238,0.92);
-  padding: 5px 12px;
-  border-radius: 100px;
-  box-shadow: 0 1px 6px rgba(0,0,0,0.08);
-}
-.marker-dot {
-  width: 18px;
-  height: 18px;
-  background: var(--gold);
-  border-radius: 50%;
-  border: 3px solid var(--grund);
-  box-shadow: 0 2px 10px rgba(0,0,0,0.2);
-  margin: 0 auto;
-}
-/* ═══════════════════════════════════════
-   WHATSAPP BUTTON
-   ═══════════════════════════════════════ */
+/* WHATSAPP */
 .wa-float {
   position: fixed;
   bottom: 28px;
   right: 28px;
   z-index: 1500;
-  width: 44px;
-  height: 44px;
+  width: 48px; height: 48px;
   background: var(--stein);
   border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: none;
-  opacity: 0.45;
+  display: flex; align-items: center; justify-content: center;
+  opacity: 0.55;
   transition: opacity 0.3s, transform 0.3s;
 }
-.wa-float:hover {
-  opacity: 0.85;
-  transform: scale(1.05);
-}
-.wa-float svg { width: 20px; height: 20px; fill: var(--grund); }
+.wa-float:hover { opacity: 0.95; transform: scale(1.05); }
+.wa-float svg { width: 22px; height: 22px; fill: var(--grund); }
 
-/* ═══════════════════════════════════════
-   LEGAL MODALS
-   ═══════════════════════════════════════ */
+/* LIGHTBOX */
+.lightbox {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 4000;
+  background: rgba(10,10,10,0.94);
+  align-items: center;
+  justify-content: center;
+  cursor: zoom-out;
+}
+.lightbox.open { display: flex; }
+.lightbox-img {
+  max-width: 90vw;
+  max-height: 85vh;
+  object-fit: contain;
+  width: auto; height: auto;
+}
+.lightbox-caption {
+  position: absolute;
+  bottom: 32px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.7);
+}
+.lightbox-close,
+.lightbox-prev,
+.lightbox-next {
+  position: absolute;
+  background: none;
+  border: 1px solid rgba(255,255,255,0.3);
+  color: rgba(255,255,255,0.85);
+  width: 48px; height: 48px;
+  border-radius: 50%;
+  display: grid; place-items: center;
+  cursor: pointer;
+  transition: border-color 0.3s, color 0.3s;
+  font-size: 1rem;
+}
+.lightbox-close:hover,
+.lightbox-prev:hover,
+.lightbox-next:hover { border-color: #fff; color: #fff; }
+.lightbox-close { top: 32px; right: 32px; }
+.lightbox-prev { left: 32px; top: 50%; transform: translateY(-50%); }
+.lightbox-next { right: 32px; top: 50%; transform: translateY(-50%); }
+.lightbox-counter {
+  position: absolute;
+  top: 36px; left: 32px;
+  font-family: var(--font-body);
+  font-size: 0.72rem;
+  letter-spacing: 0.18em;
+  color: rgba(255,255,255,0.7);
+}
+
+/* LEGAL MODALS */
 .legal-modal {
   display: none;
   position: fixed;
   inset: 0;
   z-index: 3000;
-  background: rgba(0,0,0,0.4);
+  background: rgba(0,0,0,0.45);
   align-items: center;
   justify-content: center;
 }
@@ -769,15 +1004,8 @@ section {
   padding: 60px 48px;
   position: relative;
 }
-.legal-modal-content h2 {
-  font-size: 1.8rem;
-  margin-bottom: 32px;
-}
-.legal-modal-content h3 {
-  font-size: 1.1rem;
-  margin-top: 32px;
-  margin-bottom: 12px;
-}
+.legal-modal-content h2 { font-size: 1.8rem; margin-bottom: 32px; }
+.legal-modal-content h3 { font-size: 1.1rem; margin-top: 32px; margin-bottom: 12px; }
 .legal-modal-content p,
 .legal-modal-content li {
   font-size: 0.85rem;
@@ -786,30 +1014,289 @@ section {
   color: var(--patina);
   margin-bottom: 12px;
 }
-.legal-modal-content ul { padding-left: 20px; }
 .legal-close {
   position: absolute;
   top: 24px; right: 24px;
-  font-size: 1.2rem;
+  font-size: 1.4rem;
   color: var(--stein);
-  cursor: pointer;
   background: none;
   border: none;
-  transition: color 0.3s;
+  cursor: pointer;
+  line-height: 1;
 }
 .legal-close:hover { color: var(--leinen); }
 
-/* ═══════════════════════════════════════
-   FADE-IN ANIMATION
-   ═══════════════════════════════════════ */
+/* SCROLL REVEAL */
 .fade-in {
   opacity: 0;
   transform: translateY(30px);
-  transition: opacity 0.8s ease, transform 0.8s ease;
+  transition: opacity 0.9s ease, transform 0.9s ease;
 }
 .fade-in.visible {
   opacity: 1;
   transform: translateY(0);
+}
+
+/* SNOW (seasonal) */
+.snow {
+  position: fixed; inset: 0;
+  pointer-events: none;
+  z-index: 800;
+  display: none;
+}
+body[data-season="winter"] .snow { display: block; }
+.snow span {
+  position: absolute;
+  top: -20px;
+  width: 4px; height: 4px;
+  background: #fff;
+  border-radius: 50%;
+  opacity: 0.75;
+  animation: snowfall linear infinite;
+  filter: blur(0.4px);
+}
+@keyframes snowfall {
+  0% { transform: translate3d(0,-20px,0); opacity: 0; }
+  10% { opacity: 0.8; }
+  100% { transform: translate3d(40px,110vh,0); opacity: 0; }
+}
+
+/* TWEAKS PANEL */
+.tweaks-panel {
+  display: none;
+  position: fixed;
+  bottom: 28px;
+  left: 28px;
+  z-index: 2500;
+  width: 320px;
+  max-height: calc(100vh - 56px);
+  overflow-y: auto;
+  background: var(--panel-bg);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid color-mix(in srgb, var(--patina) 12%, transparent);
+  padding: 24px;
+  font-family: var(--font-body);
+  color: var(--patina);
+  box-shadow: 0 10px 40px rgba(0,0,0,0.12);
+}
+.tweaks-panel.open { display: block; }
+.tweaks-panel h4 {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  font-weight: 300;
+  margin-bottom: 4px;
+  color: var(--leinen);
+  letter-spacing: 0.05em;
+}
+.tweaks-panel .subtitle {
+  font-size: 0.68rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--stein);
+  margin-bottom: 24px;
+}
+.tweak-group { margin-bottom: 24px; }
+.tweak-group > label {
+  display: block;
+  font-size: 0.62rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--stein);
+  margin-bottom: 10px;
+}
+.tweak-options {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 6px;
+}
+.tweak-options.three { grid-template-columns: repeat(3, 1fr); }
+.tweak-options button {
+  font-family: var(--font-body);
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  color: var(--patina);
+  background: color-mix(in srgb, var(--patina) 4%, transparent);
+  border: 1px solid color-mix(in srgb, var(--patina) 10%, transparent);
+  padding: 10px 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-align: center;
+}
+.tweak-options button:hover { border-color: var(--accent); color: var(--accent); }
+.tweak-options button.active {
+  background: var(--leinen);
+  color: var(--grund);
+  border-color: var(--leinen);
+}
+.tweak-toggle-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.toggle-switch {
+  position: relative;
+  width: 40px; height: 22px;
+  background: color-mix(in srgb, var(--patina) 15%, transparent);
+  border-radius: 100px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+.toggle-switch::after {
+  content: '';
+  position: absolute;
+  top: 2px; left: 2px;
+  width: 18px; height: 18px;
+  background: var(--grund);
+  border-radius: 50%;
+  transition: transform 0.3s;
+}
+.toggle-switch.on { background: var(--accent); }
+.toggle-switch.on::after { transform: translateX(18px); }
+
+
+/* ═══ CUSTOM CALENDAR ═══ */
+.date-display {
+  width: 100%;
+  border-bottom: 1px solid var(--stein);
+  padding: 10px 0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transition: border-color 0.25s;
+  position: relative;
+}
+.date-display:focus, .date-display:hover { border-color: var(--accent); outline: none; }
+.date-display::after {
+  content: '';
+  width: 10px; height: 10px;
+  border-right: 1px solid var(--stein);
+  border-bottom: 1px solid var(--stein);
+  transform: rotate(45deg) translateY(-3px);
+  transition: border-color 0.25s;
+}
+.date-display:hover::after, .date-display:focus::after { border-color: var(--accent); }
+.date-display-value {
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  font-weight: 300;
+  color: var(--leinen);
+}
+.date-display-value.placeholder { color: var(--stein); opacity: 0.6; }
+
+.cal-popup {
+  display: none;
+  position: absolute;
+  z-index: 2000;
+  background: var(--grund);
+  border: 1px solid color-mix(in srgb, var(--patina) 12%, transparent);
+  padding: 28px 24px 20px;
+  width: 320px;
+  box-shadow: 0 16px 48px rgba(0,0,0,0.12);
+  margin-top: 6px;
+}
+.cal-popup.open { display: block; }
+
+.cal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+.cal-month-label {
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  font-weight: 300;
+  color: var(--leinen);
+  letter-spacing: 0.04em;
+}
+.cal-nav {
+  width: 32px; height: 32px;
+  border: 1px solid color-mix(in srgb, var(--patina) 14%, transparent);
+  border-radius: 50%;
+  display: grid; place-items: center;
+  color: var(--patina);
+  font-size: 1.1rem;
+  cursor: pointer;
+  background: none;
+  transition: border-color 0.2s, color 0.2s;
+}
+.cal-nav:hover { border-color: var(--accent); color: var(--accent); }
+
+.cal-weekdays {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  margin-bottom: 8px;
+}
+.cal-weekdays span {
+  font-family: var(--font-body);
+  font-size: 0.6rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--stein);
+  text-align: center;
+  padding: 4px 0;
+}
+.cal-weekdays .cal-sat { color: var(--accent); }
+
+.cal-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 2px;
+}
+.cal-day {
+  aspect-ratio: 1;
+  display: grid;
+  place-items: center;
+  font-family: var(--font-body);
+  font-size: 0.78rem;
+  font-weight: 300;
+  color: var(--patina);
+  cursor: default;
+  border-radius: 2px;
+  transition: background 0.15s, color 0.15s;
+  position: relative;
+}
+.cal-day.empty { pointer-events: none; }
+.cal-day.past { opacity: 0.25; pointer-events: none; }
+.cal-day.saturday {
+  color: var(--accent);
+  font-weight: 400;
+  cursor: pointer;
+}
+.cal-day:not(.past):not(.empty) {
+  cursor: pointer;
+}
+.cal-day:not(.past):not(.empty):not(.saturday):hover {
+  background: color-mix(in srgb, var(--patina) 6%, transparent);
+}
+.cal-day.saturday:hover {
+  background: color-mix(in srgb, var(--accent) 12%, transparent);
+}
+.cal-day.checkin-day {
+  background: var(--accent);
+  color: var(--grund);
+  border-radius: 2px 0 0 2px;
+}
+.cal-day.checkout-day {
+  background: color-mix(in srgb, var(--accent) 30%, transparent);
+  color: var(--leinen);
+  border-radius: 0 2px 2px 0;
+}
+.cal-day.in-range {
+  background: color-mix(in srgb, var(--accent) 12%, transparent);
+  border-radius: 0;
+}
+
+.cal-hint {
+  font-family: var(--font-body);
+  font-size: 0.62rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--stein);
+  margin-top: 16px;
+  text-align: center;
 }
 
 /* ═══════════════════════════════════════
@@ -821,63 +1308,48 @@ section {
   .intro-grid { grid-template-columns: 1fr; }
   .room { grid-template-columns: 1fr; }
   .seiseralm-grid { grid-template-columns: 1fr; }
-  .nav-links, .nav-cta-wrap { display: none; }
+  .nav-links, .nav-cta-wrap, .season-toggle { display: none; }
   .nav-hamburger { display: flex; }
-
   .hero-img img { object-position: 50% center; }
   .hero-content { left: 24px; bottom: 60px; }
   .hero-scroll { display: none; }
-
-  .anreise-grid,
-  .kontakt-grid {
-    grid-template-columns: 1fr;
-    gap: 40px;
-  }
+  .anreise-grid, .kontakt-grid { grid-template-columns: 1fr; gap: 40px; }
   .room.reverse .room-img { order: 0; }
   .room.reverse .room-text { order: 0; }
-
-  .intro-img-wrap { height: 280px; }
-  .room-img { height: auto; aspect-ratio: 4 / 5; width: 62%; justify-self: start; }
-
-  .highlights-grid {
-    grid-template-columns: 1fr;
-    gap: 2px;
-  }
-
-  .seiseralm-text { padding: 80px 24px; }
+  .intro-img-wrap { height: 320px; }
+  .room-img { height: auto; aspect-ratio: 4/5; }
+  .highlights-grid { grid-template-columns: 1fr; }
+  .seiseralm-text { padding: 60px 24px; }
   .seiseralm-img { min-height: 300px; }
   .seiseralm-grid { min-height: auto; }
-
   .form-row { grid-template-columns: 1fr; }
-
   .map-wrapper { min-height: 350px; }
-
-  .section-geschichte {
-    background-attachment: scroll;
-    min-height: auto;
-  }
+  .section-geschichte { background-attachment: scroll; min-height: auto; }
   .legal-modal-content { padding: 40px 24px; }
-  .wa-float { bottom: 18px; right: 18px; width: 40px; height: 40px; }
-  .wa-float svg { width: 18px; height: 18px; }
+  .tweaks-panel { left: 12px; right: 12px; bottom: 12px; width: auto; max-height: 65vh; }
+  body[data-hero="split"] .hero { grid-template-columns: 1fr; grid-template-rows: 1fr auto; }
+  body[data-hero="split"] .hero-content { padding: 40px 24px; }
 }
-</style>
-</head>
-<body>
 
-<!-- ═══════════════════════════════════════
-     NAVIGATION
-     ═══════════════════════════════════════ -->
+</style>
+<link id="gfont-Merriweather" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;500;600;700&amp;display=swap"></head>
+<body data-screen-label="Chalet Seiser Alm" data-palette="warm" data-typo="grotesk" data-hero="fullbleed" data-season="summer" data-cc-id="cc-1" style="cursor: crosshair; font-family: Merriweather;">
+
+<div class="snow" id="snow" aria-hidden="true"><span style="left: 49.905429%; height: 5.9px; width: 5.9px; animation-duration: 14.4s; animation-delay: -2.5s; opacity: 0.56;"></span><span style="left: 81.35431%; height: 5.6px; width: 5.6px; animation-duration: 9.7s; animation-delay: -10.7s; opacity: 0.67;"></span><span style="left: 84.189314%; height: 5.8px; width: 5.8px; animation-duration: 13.8s; animation-delay: -14.9s; opacity: 0.66;"></span><span style="left: 8.276924%; height: 2.4px; width: 2.4px; animation-duration: 10.6s; animation-delay: -9.1s; opacity: 0.81;"></span><span style="left: 96.083085%; height: 4.8px; width: 4.8px; animation-duration: 18s; animation-delay: -11s; opacity: 0.48;"></span><span style="left: 22.696913%; height: 4.8px; width: 4.8px; animation-duration: 13.1s; animation-delay: -1.6s; opacity: 0.75;"></span><span style="left: 34.88731%; height: 5.6px; width: 5.6px; animation-duration: 13.8s; animation-delay: -1.3s; opacity: 0.57;"></span><span style="left: 88.246138%; height: 2.1px; width: 2.1px; animation-duration: 13.2s; animation-delay: -6.6s; opacity: 0.46;"></span><span style="left: 13.741286%; height: 4.7px; width: 4.7px; animation-duration: 16.7s; animation-delay: -3.8s; opacity: 0.49;"></span><span style="left: 54.269921%; height: 5.2px; width: 5.2px; animation-duration: 10s; animation-delay: -8.9s; opacity: 0.43;"></span><span style="left: 93.973775%; height: 5.3px; width: 5.3px; animation-duration: 12.9s; animation-delay: -2.5s; opacity: 0.62;"></span><span style="left: 53.228969%; height: 3.2px; width: 3.2px; animation-duration: 10.9s; animation-delay: -12.5s; opacity: 0.79;"></span><span style="left: 22.389417%; height: 5.4px; width: 5.4px; animation-duration: 9.6s; animation-delay: -13s; opacity: 0.67;"></span><span style="left: 41.866476%; height: 4.3px; width: 4.3px; animation-duration: 14s; animation-delay: -12.3s; opacity: 0.74;"></span><span style="left: 95.404408%; height: 5.2px; width: 5.2px; animation-duration: 14.3s; animation-delay: -14s; opacity: 0.82;"></span><span style="left: 72.789229%; height: 2.6px; width: 2.6px; animation-duration: 13.3s; animation-delay: -12.7s; opacity: 0.65;"></span><span style="left: 15.264714%; height: 4.4px; width: 4.4px; animation-duration: 13.7s; animation-delay: -0.6s; opacity: 0.46;"></span><span style="left: 8.887192%; height: 2.7px; width: 2.7px; animation-duration: 16.6s; animation-delay: -5.7s; opacity: 0.83;"></span><span style="left: 46.399398%; height: 5.2px; width: 5.2px; animation-duration: 17.5s; animation-delay: -5.6s; opacity: 0.49;"></span><span style="left: 62.849681%; height: 5.8px; width: 5.8px; animation-duration: 13.9s; animation-delay: -7.2s; opacity: 0.81;"></span><span style="left: 13.994496%; height: 2.8px; width: 2.8px; animation-duration: 10.6s; animation-delay: -1.4s; opacity: 0.73;"></span><span style="left: 25.716268%; height: 2.9px; width: 2.9px; animation-duration: 16.8s; animation-delay: -2.8s; opacity: 0.57;"></span><span style="left: 83.473316%; height: 4.6px; width: 4.6px; animation-duration: 13.4s; animation-delay: -9.8s; opacity: 0.44;"></span><span style="left: 51.857094%; height: 3.8px; width: 3.8px; animation-duration: 13.1s; animation-delay: -11.8s; opacity: 0.42;"></span><span style="left: 4.169583%; height: 2.4px; width: 2.4px; animation-duration: 10.3s; animation-delay: -3.7s; opacity: 0.68;"></span><span style="left: 49.795636%; height: 2.7px; width: 2.7px; animation-duration: 11.9s; animation-delay: -9s; opacity: 0.57;"></span><span style="left: 29.114145%; height: 5px; width: 5px; animation-duration: 17.4s; animation-delay: -6.9s; opacity: 0.85;"></span><span style="left: 39.403334%; height: 3.6px; width: 3.6px; animation-duration: 15.3s; animation-delay: -13.9s; opacity: 0.82;"></span><span style="left: 48.88118%; height: 4px; width: 4px; animation-duration: 12s; animation-delay: -11.5s; opacity: 0.76;"></span><span style="left: 2.948403%; height: 2.4px; width: 2.4px; animation-duration: 8.5s; animation-delay: -0.5s; opacity: 0.76;"></span><span style="left: 11.73368%; height: 3px; width: 3px; animation-duration: 14.9s; animation-delay: -13s; opacity: 0.71;"></span><span style="left: 45.250121%; height: 2.9px; width: 2.9px; animation-duration: 8.3s; animation-delay: -5.6s; opacity: 0.7;"></span><span style="left: 23.848521%; height: 4.1px; width: 4.1px; animation-duration: 12s; animation-delay: -4s; opacity: 0.83;"></span><span style="left: 33.533071%; height: 2.7px; width: 2.7px; animation-duration: 17.6s; animation-delay: -13.7s; opacity: 0.87;"></span><span style="left: 61.436792%; height: 3.4px; width: 3.4px; animation-duration: 11.7s; animation-delay: -7.7s; opacity: 0.51;"></span><span style="left: 56.232586%; height: 4.1px; width: 4.1px; animation-duration: 15.7s; animation-delay: -6.2s; opacity: 0.44;"></span><span style="left: 47.233742%; height: 2.8px; width: 2.8px; animation-duration: 16.9s; animation-delay: -0.6s; opacity: 0.81;"></span><span style="left: 76.691083%; height: 2.5px; width: 2.5px; animation-duration: 15.7s; animation-delay: -0.7s; opacity: 0.54;"></span><span style="left: 87.722473%; height: 5.2px; width: 5.2px; animation-duration: 8.7s; animation-delay: -1.4s; opacity: 0.59;"></span><span style="left: 49.850532%; height: 2.7px; width: 2.7px; animation-duration: 12.4s; animation-delay: -14.8s; opacity: 0.77;"></span><span style="left: 14.43054%; height: 4.6px; width: 4.6px; animation-duration: 8.4s; animation-delay: -8.8s; opacity: 0.76;"></span><span style="left: 87.506599%; height: 5.5px; width: 5.5px; animation-duration: 9.3s; animation-delay: -14.4s; opacity: 0.61;"></span><span style="left: 23.220365%; height: 6px; width: 6px; animation-duration: 11.4s; animation-delay: -5.1s; opacity: 0.69;"></span><span style="left: 26.618241%; height: 2.7px; width: 2.7px; animation-duration: 16.1s; animation-delay: -12.9s; opacity: 0.83;"></span><span style="left: 59.608176%; height: 2.4px; width: 2.4px; animation-duration: 10.3s; animation-delay: -0.5s; opacity: 0.44;"></span><span style="left: 82.845783%; height: 5.4px; width: 5.4px; animation-duration: 8.1s; animation-delay: -3.8s; opacity: 0.81;"></span><span style="left: 66.535293%; height: 3.4px; width: 3.4px; animation-duration: 17.7s; animation-delay: -3.8s; opacity: 0.67;"></span><span style="left: 87.986367%; height: 3.4px; width: 3.4px; animation-duration: 16.3s; animation-delay: -0.8s; opacity: 0.76;"></span><span style="left: 6.8297%; height: 4.6px; width: 4.6px; animation-duration: 16.2s; animation-delay: -10.7s; opacity: 0.48;"></span><span style="left: 78.01312%; height: 3.5px; width: 3.5px; animation-duration: 12.1s; animation-delay: -14.8s; opacity: 0.82;"></span><span style="left: 32.085108%; height: 3.4px; width: 3.4px; animation-duration: 16.5s; animation-delay: -1.8s; opacity: 0.45;"></span><span style="left: 74.769302%; height: 5px; width: 5px; animation-duration: 16.5s; animation-delay: -2.1s; opacity: 0.43;"></span><span style="left: 46.324688%; height: 3.7px; width: 3.7px; animation-duration: 11s; animation-delay: -9.5s; opacity: 0.81;"></span><span style="left: 16.59312%; height: 4.1px; width: 4.1px; animation-duration: 13.6s; animation-delay: -2.3s; opacity: 0.45;"></span><span style="left: 78.125472%; height: 3.4px; width: 3.4px; animation-duration: 8.2s; animation-delay: -10.9s; opacity: 0.55;"></span><span style="left: 1.374222%; height: 3.1px; width: 3.1px; animation-duration: 11.5s; animation-delay: -1.4s; opacity: 0.47;"></span><span style="left: 66.635133%; height: 5.6px; width: 5.6px; animation-duration: 9.4s; animation-delay: -10.5s; opacity: 0.45;"></span><span style="left: 81.144916%; height: 2.1px; width: 2.1px; animation-duration: 9.1s; animation-delay: -7.5s; opacity: 0.44;"></span><span style="left: 11.615245%; height: 4px; width: 4px; animation-duration: 8s; animation-delay: -5s; opacity: 0.58;"></span><span style="left: 56.126999%; height: 3.8px; width: 3.8px; animation-duration: 10.3s; animation-delay: -7.1s; opacity: 0.55;"></span></div>
+
+<!-- NAV -->
 <nav class="nav" id="mainNav">
   <div class="nav-lang">
+    </span>
     <button onclick="setLang('de')" class="active" data-lang-btn="de">DE</button>
     <button onclick="setLang('it')" data-lang-btn="it">IT</button>
     <button onclick="setLang('en')" data-lang-btn="en">EN</button>
   </div>
   <div class="nav-inner">
-    <a href="#hero" class="nav-wordmark">Chalet <em>Seiser Alm</em></a>
+    <a href="#hero" class="nav-wordmark" style="color: rgb(206, 75, 75);">Chalet <em>Seiser Alm</em></a>
     <ul class="nav-links">
-      <li><a href="#chalet" data-i18n="nav_chalet">Das Chalet</a></li>
-      <li><a href="#highlights" data-i18n="nav_highlights">Highlights</a></li>
+      <li><a href="#chalet" data-i18n="nav_chalet" class="">Das Chalet</a></li>
+      <li><a href="#highlights" data-i18n="nav_highlights" class="">Highlights</a></li>
       <li><a href="#geschichte" data-i18n="nav_geschichte">Geschichte</a></li>
       <li><a href="#anreise" data-i18n="nav_anreise">Anreise</a></li>
       <li><a href="#seiseralm" data-i18n="nav_seiseralm">Die Region</a></li>
@@ -891,27 +1363,23 @@ section {
   </div>
 </nav>
 
-<!-- Mobile overlay -->
 <div class="nav-mobile-overlay" id="mobileMenu">
-  <a href="#chalet" onclick="closeMobile()" data-i18n="nav_chalet">Das Chalet</a>
-  <a href="#highlights" onclick="closeMobile()" data-i18n="nav_highlights">Highlights</a>
+  <a href="#chalet" onclick="closeMobile()" data-i18n="nav_chalet" class="">Das Chalet</a>
+  <a href="#highlights" onclick="closeMobile()" data-i18n="nav_highlights" class="">Highlights</a>
   <a href="#geschichte" onclick="closeMobile()" data-i18n="nav_geschichte">Geschichte</a>
   <a href="#anreise" onclick="closeMobile()" data-i18n="nav_anreise">Anreise</a>
   <a href="#seiseralm" onclick="closeMobile()" data-i18n="nav_seiseralm">Die Region</a>
   <a href="#anfragen" onclick="closeMobile()" class="nav-cta" data-i18n="nav_cta" style="margin-top:16px;">Anfragen</a>
 </div>
 
-<!-- ═══════════════════════════════════════
-     HERO
-     ═══════════════════════════════════════ -->
-<section class="hero" id="hero">
+<!-- HERO -->
+<section class="hero" id="hero" data-screen-label="01 Hero">
   <div class="hero-img">
-    <!-- Hero: Chalet mit weiter Almlandschaft und Dolomiten -->
-    <img src="img/hero.jpg" alt="Chalet Seiser Alm inmitten der Almlandschaft mit Dolomiten-Panorama">
+    <img alt="Chalet Seiser Alm inmitten der Almlandschaft mit Dolomiten-Panorama" src="img/hero.jpg">
   </div>
   <div class="hero-gradient"></div>
   <div class="hero-content">
-    <p class="eyebrow" data-i18n="hero_eyebrow">Seiser Alm · Südtirol · Dolomiten</p>
+    <p class="eyebrow" data-i18n="hero_eyebrow" style="color: rgb(191, 191, 191);">Seiser Alm · Südtirol · Dolomiten</p>
     <h1>Chalet<br><em>Seiser Alm</em></h1>
     <p class="hero-subtitle" data-i18n="hero_subtitle">Inmitten der größten Hochalm Europas</p>
   </div>
@@ -921,50 +1389,35 @@ section {
   </a>
 </section>
 
-<!-- ═══════════════════════════════════════
-     INTRO
-     ═══════════════════════════════════════ -->
+<!-- INTRO -->
 <section class="section-intro" id="intro">
   <div class="intro-grid">
-    <div class="fade-in">
+    <div class="fade-in visible">
       <p class="eyebrow" data-i18n="intro_eyebrow">Willkommen</p>
       <p class="intro-quote" data-i18n="intro_quote">„Das Chalet befindet sich inmitten der größten Hochalm Europas, umgeben von imposanten Dolomiten-Gipfeln."</p>
       <div class="divider"></div>
-      <p class="body-text" data-i18n="intro_text">Im Sommer bedecken Blumen die weiten grünen Flächen, im Winter glitzern die Schneekristalle. Unser traditionelles Holzchalet ist ein Rückzugsort für alle, die echte Bergstille suchen.</p>
+      <p class="body-text" data-i18n="intro_text" style="font-family: Merriweather;">Im Sommer bedecken Blumen die weiten grünen Flächen, im Winter glitzern die Schneekristalle. Unser traditionelles Holzchalet ist ein Rückzugsort für alle, die echte Bergstille suchen.</p>
     </div>
-    <div class="intro-img-wrap fade-in">
-      <!-- Intro: Chalet mit Schlern und Santner Spitze -->
-      <img src="img/intro.jpg" alt="Chalet Seiser Alm mit Schlern und Santner Spitze im Hintergrund">
+    <div class="intro-img-wrap fade-in visible" data-lightbox="img/intro.jpg">
+      <img alt="Chalet mit Schlern und Santner Spitze" src="img/intro.jpg">
     </div>
   </div>
 </section>
 
-<!-- ═══════════════════════════════════════
-     DAS CHALET — RÄUME
-     ═══════════════════════════════════════ -->
-<section class="section-chalet" id="chalet">
+<!-- CHALET / ROOMS -->
+<section class="section-chalet" id="chalet" data-screen-label="02 Das Chalet">
   <div class="rooms-container">
-
-    <!-- Stube & Küche -->
-    <div class="room fade-in">
-      <div class="room-img">
-        <!-- Stube & Küche: Gesamtansicht mit Esstisch, Küche, Holzbalken -->
-        <img src="img/stube.jpg" alt="Gemütliche Stube mit großem Holztisch und Küche">
-      </div>
+    <div class="room fade-in visible">
+      <div class="room-img" data-lightbox="img/stube.jpg"><img alt="Stube &amp; Küche" src="img/stube.jpg"></div>
       <div class="room-text">
-        <p class="eyebrow" data-i18n="room1_eyebrow">Stube & Küche</p>
+        <p class="eyebrow" data-i18n="room1_eyebrow">Stube &amp; Küche</p>
         <h3 data-i18n="room1_title">Das Herzstück</h3>
         <div class="divider"></div>
-        <p class="body-text" data-i18n="room1_text">Das Herzstück des Chalets ist die gemütliche Stube, mit viel Holz und einem großen Esstisch lädt sie zum Zusammensitzen, Spielen und Genießen ein. Gleich daneben befindet sich die gut ausgestattete Küche mit Ceran-Kochfeld, geräumigem Kühlschrank und allem, was man für entspannte Ferientage braucht.</p>
+        <p class="body-text" data-i18n="room1_text" style="font-family: Merriweather;">Das Herzstück des Chalets ist die gemütliche Stube, mit viel Holz und einem großen Esstisch lädt sie zum Zusammensitzen, Spielen und Genießen ein. Gleich daneben befindet sich die gut ausgestattete Küche mit Ceran-Kochfeld, geräumigem Kühlschrank und allem, was man für entspannte Ferientage braucht.</p>
       </div>
     </div>
-
-    <!-- Schlafzimmer -->
-    <div class="room reverse fade-in">
-      <div class="room-img">
-        <!-- Schlafzimmer: Blick durch Türrahmen, warmes Licht -->
-        <img src="img/schlafzimmer.jpg" alt="Alpines Schlafzimmer mit Holzwänden und warmem Licht">
-      </div>
+    <div class="room reverse fade-in visible">
+      <div class="room-img" data-lightbox="img/schlafzimmer.jpg"><img alt="Schlafzimmer" src="img/schlafzimmer.jpg"></div>
       <div class="room-text">
         <p class="eyebrow" data-i18n="room2_eyebrow">Schlafzimmer</p>
         <h3 data-i18n="room2_title">Geborgenheit &amp; Stille</h3>
@@ -972,13 +1425,8 @@ section {
         <p class="body-text" data-i18n="room2_text">Mit viel Holz und alpinem Flair gestaltet, strahlen die Räume eine wohltuende Geborgenheit aus. Der Blick nach draußen erinnert daran, dass die Natur zum Greifen nah ist. Bequeme Betten und liebevolle Details schaffen den idealen Ort für erholsame Nächte auf der Seiser Alm.</p>
       </div>
     </div>
-
-    <!-- Terrassen -->
-    <div class="room fade-in">
-      <div class="room-img">
-        <!-- Terrassen: Terrasse mit Blick auf Almwiese und Berge -->
-        <img src="img/terrasse.jpg" alt="Holzterrasse mit Panoramablick auf die Seiser Alm">
-      </div>
+    <div class="room fade-in visible">
+      <div class="room-img" data-lightbox="img/terrasse.jpg"><img alt="Terrasse" src="img/terrasse.jpg"></div>
       <div class="room-text">
         <p class="eyebrow" data-i18n="room3_eyebrow">Zwei Terrassen</p>
         <h3 data-i18n="room3_title">Ost &amp; West</h3>
@@ -986,13 +1434,8 @@ section {
         <p class="body-text" data-i18n="room3_text">Die zwei Terrassen richten sich nach Osten und nach Westen – so kann man bei Sonnenauf- und Untergang die alpine Umgebung genießen. Entweder Lang und Plattkofel oder Richtung Schlern mit seiner markanten Santner Spitze.</p>
       </div>
     </div>
-
-    <!-- Bad -->
-    <div class="room reverse fade-in">
-      <div class="room-img">
-        <!-- Bad: Doppelwaschbecken mit Holzspiegel -->
-        <img src="img/bad.jpg" alt="Schlichtes Badezimmer mit Doppelwaschbecken">
-      </div>
+    <div class="room reverse fade-in visible">
+      <div class="room-img" data-lightbox="img/bad.jpg"><img alt="Badezimmer" src="img/bad.jpg"></div>
       <div class="room-text">
         <p class="eyebrow" data-i18n="room4_eyebrow">Das Bad</p>
         <h3 data-i18n="room4_title">Schlicht &amp; Funktional</h3>
@@ -1000,30 +1443,27 @@ section {
         <p class="body-text" data-i18n="room4_text">Schlicht und funktional – das Bad bietet alles, was man für eine entspannte Auszeit in den Bergen braucht. Neben Dusche, Waschbecken und WC steht auch eine Waschmaschine zur Verfügung, ideal für längere Aufenthalte oder aktive Tage draußen.</p>
       </div>
     </div>
-
   </div>
 </section>
 
-<!-- ═══════════════════════════════════════
-     HIGHLIGHTS
-     ═══════════════════════════════════════ -->
-<section class="section-highlights" id="highlights">
+<!-- HIGHLIGHTS -->
+<section class="section-highlights" id="highlights" data-screen-label="03 Highlights" style="background-color: rgb(233, 223, 215);">
   <div style="max-width:1200px; margin:0 auto 64px;">
-    <p class="eyebrow fade-in" data-i18n="highlights_eyebrow">Auf einen Blick</p>
-    <h2 class="fade-in" data-i18n="highlights_title">Was Sie <em>erwartet</em></h2>
+    <p class="eyebrow fade-in visible" data-i18n="highlights_eyebrow">Auf einen Blick</p>
+    <h2 class="fade-in visible" data-i18n="highlights_title">Was Sie <em>erwartet</em></h2>
   </div>
   <div class="highlights-grid">
-    <div class="highlight-card fade-in">
+    <div class="highlight-card fade-in visible">
       <div class="highlight-num">01</div>
       <h3 data-i18n="hl1_title">Panorama-Aussicht</h3>
       <p class="body-text" data-i18n="hl1_text">Lang, Plattkofel, Schlern und die Santner Spitze – eingerahmt durch die eigenen Fenster.</p>
     </div>
-    <div class="highlight-card fade-in">
+    <div class="highlight-card fade-in visible">
       <div class="highlight-num">02</div>
       <h3 data-i18n="hl2_title">Ski-in / Ski-out</h3>
       <p class="body-text" data-i18n="hl2_text">Direkt an den Pisten. Skier an der Haustür anschnallen und los.</p>
     </div>
-    <div class="highlight-card fade-in">
+    <div class="highlight-card fade-in visible">
       <div class="highlight-num">03</div>
       <h3 data-i18n="hl3_title">Ganzjährig</h3>
       <p class="body-text" data-i18n="hl3_text">Skiurlaub im Winter, Blütenwiesen im Sommer. Für 4–7 Personen.</p>
@@ -1031,68 +1471,60 @@ section {
   </div>
 </section>
 
-<!-- ═══════════════════════════════════════
-     GESCHICHTE
-     ═══════════════════════════════════════ -->
-<!-- Geschichte: Namensschild auf verwittertem Holz -->
-<section class="section-geschichte" id="geschichte" style="background-image: url('img/geschichte.jpg');">
+<!-- GESCHICHTE -->
+<section class="section-geschichte" id="geschichte" data-screen-label="04 Geschichte" style="background-image: url('img/geschichte.jpg');">
   <div class="geschichte-overlay"></div>
-  <div class="geschichte-content fade-in">
-    <p class="eyebrow" data-i18n="geschichte_eyebrow">Seit 1938</p>
-    <h2 data-i18n="geschichte_title">Eine Geschichte<br><em>aus dem Berg</em></h2>
-    <div class="divider"></div>
-    <p class="body-text" data-i18n="geschichte_text">Das Chalet wurde nicht immer nur zur Übernachtung genutzt, sondern diente seit seiner Erbauung 1938 bis 1970 als Talstation des ersten Skibetriebes „Panorama Lift" auf der Seiseralm. Die Seiser Alm erhielt 1935/36 mit der Bahn von St. Ulrich ihre erste Erschließung – und 1938/39 ging mit der „Slittovia-Joch-Panorama" die erste Liftanlage in Betrieb. Die einstige Stahlstation dieser Bahn wurde zur gemütlichen Berghütte Chalet Seiser Alm umgebaut, in der Gäste heute übernachten.</p>
+  <div class="geschichte-inner fade-in">
+    <div class="geschichte-content">
+      <p class="eyebrow" data-i18n="geschichte_eyebrow">Seit 1938</p>
+      <h2 data-i18n="geschichte_title">Wo die Berge<br><em>Geschichte schrieben</em></h2>
+      <div class="divider"></div>
+      <p class="body-text" data-i18n="geschichte_text">Das Chalet wurde nicht immer nur zur Übernachtung genutzt, sondern diente seit seiner Erbauung 1938 bis 1970 als Talstation des ersten Skibetriebes „Panorama Lift" auf der Seiseralm. Die Seiser Alm erhielt 1935/36 mit der Bahn von St. Ulrich ihre erste Erschließung – und 1938/39 ging mit der „Slittovia-Joch-Panorama" die erste Liftanlage in Betrieb. Die einstige Talstation dieser Bahn wurde zur gemütlichen Berghütte Chalet Seiser Alm umgebaut, in der Gäste heute übernachten.</p>
+    </div>
+    <div class="geschichte-photo" data-lightbox="img/slittovia.jpg">
+      <img src="img/slittovia.jpg" alt="Slittovia Joch-Panorama, Seiser Alm ca. 1938">
+      <p class="geschichte-photo-caption">Slittovia Joch-Panorama · ca. 1938</p>
+    </div>
   </div>
 </section>
 
-<!-- ═══════════════════════════════════════
-     LAGE & ANREISE
-     ═══════════════════════════════════════ -->
-<section class="section-anreise" id="anreise">
+<!-- ANREISE -->
+<section class="section-anreise" id="anreise" data-screen-label="05 Anreise">
   <div class="anreise-grid">
     <div>
-      <p class="eyebrow fade-in" data-i18n="anreise_eyebrow">Lage & Anreise</p>
+      <p class="eyebrow fade-in" data-i18n="anreise_eyebrow">Lage &amp; Anreise</p>
       <h2 class="fade-in" data-i18n="anreise_title">Wie Sie <em>zu uns finden</em></h2>
       <div class="divider fade-in"></div>
-
       <div class="anreise-block fade-in">
         <p class="anreise-block-label" data-i18n="anreise_lage_label">Die Lage</p>
         <p class="body-text" data-i18n="anreise_lage">Das Chalet befindet sich inmitten des Naturparks Schlern. Es liegt ruhig direkt neben Wanderwegen und Skipisten. Compatsch mit seinen kleinen Geschäften für Lebensmittel oder Zeitungen, Ski- und Radverleih ist fußläufig in 10 Minuten erreichbar. Dort befinden sich auch ein Café und ein paar Restaurants sowie die öffentlichen Verkehrsmittel mit Bus und Seilbahn.</p>
       </div>
-
       <div class="anreise-block fade-in">
         <p class="anreise-block-label" data-i18n="anreise_fahr_label">Fahrgenehmigung</p>
         <p class="body-text" data-i18n="anreise_fahr">Das Chalet liegt auf der verkehrsberuhigten Seiser Alm, welche täglich von 09:00–17:00 Uhr für den Individualverkehr gesperrt ist. Vor Reiseantritt senden wir Ihnen die Fahrgenehmigung für die Anfahrt mit Ihrem Auto ins Chalet zu. Damit sind Sie berechtigt während Ihres Aufenthaltes vor 10:00 Uhr und nach 17:00 Uhr den angegebenen Straßenabschnitt zu befahren, zeitlich uneingeschränkt an- und abzureisen (das Chalet steht Ihnen am Anreisetag ab 12:00 Uhr und am Abreisetag bis 10:00 Uhr zur Verfügung) sowie während Ihres Aufenthalts direkt neben dem Chalet zu parken.</p>
       </div>
-
       <div class="anreise-block fade-in">
         <p class="anreise-block-label" data-i18n="anreise_winter_label">Winter</p>
         <p class="body-text" data-i18n="anreise_winter">Für eine sichere Anreise im Winter empfehlen wir Winterbereifung und Schneeketten (oder Winterreifen mit Allradantrieb). Im Winter ist das Chalet leider nicht direkt mit dem Auto zu erreichen. Sie können dann bequem am Parkplatz unter dem Restaurant Panoramalift parken. Für den Gepäcktransport steht Ihnen ein nicht motorbetriebener Schlitten zur Verfügung.</p>
       </div>
-
       <div class="anreise-block fade-in">
         <p class="anreise-block-label" data-i18n="anreise_auto_label">Mit dem Auto</p>
         <p class="body-text" data-i18n="anreise_auto">Von Norden: Ausfahrt „Klausen", über Waidbruck und Kastelruth auf die Seiser Alm.<br>Von Süden: Ausfahrt „Bozen Nord", über Blumau, Völs und Seis auf die Seiser Alm.<br>Das Chalet liegt direkt hinter Compatsch.</p>
       </div>
-
-      <a href="https://www.google.com/maps/dir/?api=1&destination=46.5406429,11.6243736" target="_blank" rel="noopener" class="map-nav-link fade-in">
-        <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+      <a href="https://www.google.com/maps/dir/?api=1&amp;destination=46.5406429,11.6243736" target="_blank" rel="noopener" class="map-nav-link fade-in">
+        <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
         <span data-i18n="anreise_nav">Route in Google Maps öffnen</span>
       </a>
     </div>
-
     <div class="fade-in map-wrapper" id="mapContainer"></div>
   </div>
 </section>
 
-<!-- ═══════════════════════════════════════
-     DIE SEISER ALM
-     ═══════════════════════════════════════ -->
-<section class="section-seiseralm" id="seiseralm">
+<!-- SEISER ALM -->
+<section class="section-seiseralm" id="seiseralm" data-screen-label="06 Die Region">
   <div class="seiseralm-grid">
-    <div class="seiseralm-img">
-      <!-- Seiser Alm: Weitwinkel mit Wanderweg, Wiesen und Dolomiten -->
-      <img src="img/seiseralm.jpg" alt="Chalet Seiser Alm mit Wanderweg und Dolomiten-Panorama">
+    <div class="seiseralm-img" data-lightbox="img/seiseralm.jpg">
+      <img alt="Seiser Alm mit Wanderweg und Dolomiten" src="img/seiseralm.jpg">
     </div>
     <div class="seiseralm-text fade-in">
       <p class="eyebrow" data-i18n="seiseralm_eyebrow">Die Region</p>
@@ -1103,83 +1535,93 @@ section {
   </div>
 </section>
 
-<!-- ═══════════════════════════════════════
-     KONTAKT / ANFRAGE
-     ═══════════════════════════════════════ -->
-<section class="section-kontakt" id="anfragen">
+<!-- KONTAKT -->
+<section class="section-kontakt" id="anfragen" data-screen-label="07 Kontakt">
   <div class="kontakt-grid">
     <div class="fade-in">
       <p class="eyebrow" data-i18n="kontakt_eyebrow">Kontakt</p>
       <h2 data-i18n="kontakt_title">Ihr Aufenthalt<br><em>beginnt hier</em></h2>
       <div class="divider"></div>
       <p class="body-text" data-i18n="kontakt_text">Schreiben Sie uns – wir melden uns innerhalb von 24 Stunden mit Verfügbarkeit und einem persönlichen Angebot.</p>
-
       <div class="kontakt-info-row">
         <p class="kontakt-label" data-i18n="kontakt_addr_label">Adresse</p>
         <p class="kontakt-value">Seiser Alm, Südtirol, IT</p>
       </div>
       <div class="kontakt-info-row">
         <p class="kontakt-label" data-i18n="kontakt_email_label">E-Mail</p>
-        <p class="kontakt-value"><a href="mailto:info@chaletseiseral.info" style="color:var(--patina);transition:color .3s;" onmouseover="this.style.color='var(--gold)'" onmouseout="this.style.color='var(--patina)'">info@chaletseiseral.info</a></p>
+        <p class="kontakt-value"><a href="mailto:restaurant.panoramalift@gmail.com">restaurant.panoramalift@gmail.com</a></p>
       </div>
       <div class="kontakt-info-row">
         <p class="kontakt-label">WhatsApp</p>
-        <p class="kontakt-value"><a href="https://wa.me/393385075019?text=Hallo%2C%20ich%20interessiere%20mich%20f%C3%BCr%20das%20Chalet%20Seiser%20Alm." target="_blank" rel="noopener" style="color:var(--patina);transition:color .3s;" onmouseover="this.style.color='#25D366'" onmouseout="this.style.color='var(--patina)'" data-i18n="kontakt_wa_link">Chat starten</a></p>
+        <p class="kontakt-value"><a href="https://wa.me/393385075019" target="_blank" rel="noopener" data-i18n="kontakt_wa_link">Chat starten</a></p>
       </div>
     </div>
 
-    <form class="contact-form fade-in" id="contactForm" action="https://api.web3forms.com/submit" method="POST" onsubmit="handleSubmit(event)">
-      <input type="hidden" name="access_key" value="33e7bdd7-186b-4ef3-9cec-3e84ba94b6a1">
-      <input type="hidden" name="subject" value="Neue Anfrage – Chalet Seiser Alm">
-      <input type="hidden" name="from_name" value="Chalet Seiser Alm Website">
-      <input type="checkbox" name="botcheck" style="display:none" tabindex="-1" autocomplete="off">
-      <div class="form-field">
+    <form class="contact-form fade-in" id="contactForm" novalidate="">
+      <div class="form-field" data-field="name">
         <label for="name" data-i18n="form_name">Name</label>
-        <input type="text" id="name" name="name" required>
+        <input type="text" id="name" name="name_" autocomplete="name">
+        <span class="field-error"></span>
       </div>
-      <div class="form-field">
+      <div class="form-field" data-field="email">
         <label for="email" data-i18n="form_email">E-Mail</label>
-        <input type="email" id="email" name="email" required>
+        <input type="email" id="email" name="email" autocomplete="email">
+        <span class="field-error"></span>
       </div>
       <div class="form-field">
         <label for="phone" data-i18n="form_phone">Telefon (optional)</label>
-        <input type="tel" id="phone" name="phone">
+        <input type="tel" id="phone" name="phone" autocomplete="tel">
       </div>
-      <div class="form-row">
+      <div class="form-row" data-field="dates">
         <div class="form-field">
-          <label for="checkin" data-i18n="form_checkin">Anreise</label>
-          <input type="date" id="checkin" name="checkin" required>
+          <label data-i18n="form_checkin">Anreise</label>
+          <div class="date-display" id="checkinDisplay" tabindex="0" role="button">
+            <span class="date-display-value" id="checkinText">—</span>
+            <input type="hidden" id="checkin" name="checkin">
+          </div>
         </div>
         <div class="form-field">
-          <label for="checkout" data-i18n="form_checkout">Abreise</label>
-          <input type="date" id="checkout" name="checkout" required>
+          <label data-i18n="form_checkout">Abreise</label>
+          <div class="date-display" id="checkoutDisplay" tabindex="0" role="button">
+            <span class="date-display-value" id="checkoutText">—</span>
+            <input type="hidden" id="checkout" name="checkout">
+          </div>
         </div>
+        <span class="field-error" style="grid-column:1 / -1;"></span>
       </div>
-      <div class="form-row">
+      <!-- Custom calendar popup -->
+      <div class="cal-popup" id="calPopup" role="dialog" aria-modal="true">
+        <div class="cal-header">
+          <button type="button" class="cal-nav" id="calPrev">&#8249;</button>
+          <span class="cal-month-label" id="calMonthLabel"></span>
+          <button type="button" class="cal-nav" id="calNext">&#8250;</button>
+        </div>
+        <div class="cal-weekdays">
+          <span>Mo</span><span>Di</span><span>Mi</span><span>Do</span><span>Fr</span><span class="cal-sat">Sa</span><span>So</span>
+        </div>
+        <div class="cal-grid" id="calGrid"></div>
+        <p class="cal-hint" id="calHint">Sa hervorgehoben &#xB7; Mindestaufenthalt 4 N&#xe4;chte</p>
+      </div>
+      <div class="form-row" data-field="guests">
         <div class="form-field">
-          <label for="adults" data-i18n="form_adults">Erwachsene</label>
-          <select id="adults" name="adults" required>
-            <option value="">—</option>
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-            <option value="4">4</option>
-            <option value="5">5</option>
-            <option value="6">6</option>
-            <option value="7">7</option>
-          </select>
+          <label data-i18n="form_adults">Erwachsene</label>
+          <div class="stepper" id="adultsStepper">
+            <button type="button" class="stepper-btn" data-dec="" aria-label="−">−</button>
+            <span class="stepper-value">2</span>
+            <button type="button" class="stepper-btn" data-inc="" aria-label="+">+</button>
+            <input type="hidden" name="adults" value="2">
+          </div>
         </div>
         <div class="form-field">
-          <label for="children" data-i18n="form_children">Kinder</label>
-          <select id="children" name="children">
-            <option value="0">0</option>
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-            <option value="4">4</option>
-            <option value="5">5</option>
-          </select>
+          <label data-i18n="form_children">Kinder</label>
+          <div class="stepper" id="childrenStepper">
+            <button type="button" class="stepper-btn" data-dec="" aria-label="−" disabled="">−</button>
+            <span class="stepper-value">0</span>
+            <button type="button" class="stepper-btn" data-inc="" aria-label="+">+</button>
+            <input type="hidden" name="children" value="0">
+          </div>
         </div>
+        <span class="field-error" style="grid-column:1 / -1;"></span>
       </div>
       <div class="form-field">
         <label for="message" data-i18n="form_message">Nachricht</label>
@@ -1187,14 +1629,19 @@ section {
       </div>
       <button type="submit" class="form-submit" data-i18n="form_submit">Anfrage senden</button>
     </form>
+
+    <div class="form-success fade-in" id="formSuccess">
+      <div class="success-mark">✓</div>
+      <h3 data-i18n="form_success_title">Vielen Dank</h3>
+      <p data-i18n="form_success_text">Ihre Anfrage ist bei uns eingegangen. Wir melden uns innerhalb von 24 Stunden mit Verfügbarkeit und einem persönlichen Angebot.</p>
+      <button type="button" class="form-submit" id="successBack" style="margin-top:32px;" data-i18n="form_success_back">Neue Anfrage stellen</button>
+    </div>
   </div>
 </section>
 
-<!-- ═══════════════════════════════════════
-     FOOTER
-     ═══════════════════════════════════════ -->
+<!-- FOOTER -->
 <footer class="site-footer">
-  <div class="footer-wordmark">Chalet Seiser Alm</div>
+  <div class="footer-wordmark">Chalet <em>Seiser Alm</em></div>
   <p class="footer-tagline">Seiser Alm · Südtirol · Dolomiten</p>
   <p class="footer-tagline">UNESCO Weltnaturerbe</p>
   <div class="footer-links">
@@ -1204,117 +1651,98 @@ section {
   </div>
 </footer>
 
-<!-- WhatsApp Float Button -->
-<a href="https://wa.me/393388850459?text=Hallo%2C%20ich%20interessiere%20mich%20f%C3%BCr%20das%20Chalet%20Seiser%20Alm." target="_blank" rel="noopener" class="wa-float" aria-label="WhatsApp Chat">
-  <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51l-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+<!-- WHATSAPP -->
+<a href="https://wa.me/393385075019" target="_blank" rel="noopener" class="wa-float" aria-label="WhatsApp Chat">
+  <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51l-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"></path></svg>
 </a>
 
-<!-- Datenschutz Modal -->
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true">
+  <div class="lightbox-counter" id="lightboxCounter">01 / 07</div>
+  <button class="lightbox-close" id="lightboxClose" aria-label="Close">✕</button>
+  <button class="lightbox-prev" id="lightboxPrev" aria-label="Previous">‹</button>
+  <button class="lightbox-next" id="lightboxNext" aria-label="Next">›</button>
+  <img class="lightbox-img" id="lightboxImg" src="" alt="">
+  <div class="lightbox-caption" id="lightboxCaption"></div>
+</div>
+
+<!-- LEGAL MODALS -->
 <div class="legal-modal" id="privacyModal">
   <div class="legal-modal-content">
-    <button class="legal-close" onclick="closeModal('privacyModal')">&times;</button>
+    <button class="legal-close" onclick="closeModal('privacyModal')">✕</button>
     <h2 data-i18n="privacy_title">Datenschutzerklärung</h2>
-
-    <h3 data-i18n="privacy_h1">Verantwortlicher</h3>
-    <p>Robert Santer<br>Saltriastraße 2, 39040 Seiser Alm (BZ), Italien<br>E-Mail: info@chaletseiseral.info<br>CIN: P62QHVQ</p>
-
-    <h3 data-i18n="privacy_h2">1. Erhobene Daten</h3>
-    <p data-i18n="privacy_p2">Beim Besuch dieser Website werden automatisch folgende Daten durch den Webserver erfasst: IP-Adresse, Datum und Uhrzeit des Zugriffs, aufgerufene Seite, Browsertyp und Betriebssystem. Diese Daten sind technisch notwendig für die Auslieferung der Website und werden nicht mit anderen Datenquellen zusammengeführt.</p>
-
-    <h3 data-i18n="privacy_h3">2. Kontaktformular</h3>
-    <p data-i18n="privacy_p3">Wenn Sie das Kontaktformular nutzen, werden Ihre Angaben (Name, E-Mail, Reisedaten, Personenzahl, Nachricht) per E-Mail an uns weitergeleitet. Die Daten werden ausschließlich zur Bearbeitung Ihrer Anfrage verwendet und nicht an Dritte weitergegeben. Rechtsgrundlage: Art. 6 Abs. 1 lit. b DSGVO (vorvertragliche Maßnahmen).</p>
-
-    <h3 data-i18n="privacy_h4">3. Google Maps</h3>
-    <p data-i18n="privacy_p4">Diese Website bietet die Möglichkeit, OpenStreetMap zur Kartenanzeige zu nutzen. Google Maps wird erst nach Ihrer ausdrücklichen Einwilligung geladen. Dabei werden Daten (u.a. Ihre IP-Adresse) an Google LLC, 1600 Amphitheatre Parkway, Mountain View, CA 94043, USA übertragen. Rechtsgrundlage: Art. 6 Abs. 1 lit. a DSGVO (Einwilligung). Sie können Ihre Einwilligung jederzeit widerrufen, indem Sie die gespeicherten Daten im Browser löschen.</p>
-
-    <h3 data-i18n="privacy_h5">4. Google Fonts</h3>
-    <p data-i18n="privacy_p5">Diese Website nutzt Google Fonts zur einheitlichen Darstellung von Schriftarten. Beim Aufruf der Seite lädt Ihr Browser die benötigten Schriftarten von Google-Servern. Dabei wird Ihre IP-Adresse an Google übertragen. Weitere Informationen finden Sie in der Datenschutzerklärung von Google.</p>
-
-    <h3 data-i18n="privacy_h6">5. Cookies & Tracking</h3>
-    <p data-i18n="privacy_p6">Diese Website setzt keine Tracking-Cookies und verwendet keine Analyse-Tools. Es wird lediglich ein Eintrag im lokalen Speicher Ihres Browsers (localStorage) gesetzt, um Ihre Entscheidung bezüglich Google Maps zu speichern. Dies ist technisch notwendig und kein Cookie im eigentlichen Sinne.</p>
-
-    <h3 data-i18n="privacy_h7">6. Speicherdauer</h3>
-    <p data-i18n="privacy_p7">Anfragen über das Kontaktformular werden bis zur Bearbeitung gespeichert, maximal jedoch 12 Monate. Server-Logdaten werden nach 30 Tagen automatisch gelöscht.</p>
-
-    <h3 data-i18n="privacy_h8">7. Ihre Rechte</h3>
-    <p data-i18n="privacy_p8">Sie haben das Recht auf Auskunft, Berichtigung, Löschung, Einschränkung der Verarbeitung, Datenübertragbarkeit und Widerspruch. Kontaktieren Sie uns unter info@chaletseiseral.info. Bei Beschwerden wenden Sie sich an den Garante per la protezione dei dati personali (www.garanteprivacy.it).</p>
+    <p data-i18n="privacy_body">Verantwortlicher: Robert Santer, Saltriastraße 2, 39040 Seiser Alm (BZ), Italien. E-Mail: info@chaletseiseral.info · CIN: P62QHVQ. Diese Website setzt keine Tracking-Cookies und verwendet keine Analyse-Tools. Ihre Angaben im Kontaktformular werden ausschließlich zur Bearbeitung Ihrer Anfrage verwendet und nicht an Dritte weitergegeben. Rechtsgrundlage: Art. 6 Abs. 1 lit. b DSGVO. Sie haben das Recht auf Auskunft, Berichtigung, Löschung, Einschränkung der Verarbeitung, Datenübertragbarkeit und Widerspruch.</p>
+  </div>
+</div>
+<div class="legal-modal" id="imprintModal">
+  <div class="legal-modal-content">
+    <button class="legal-close" onclick="closeModal('imprintModal')">✕</button>
+    <h2 data-i18n="imprint_title">Impressum</h2>
+    <p data-i18n="imprint_body">Robert Santer · Saltriastraße 2 · 39040 Seiser Alm (BZ) · Italien. E-Mail: info@chaletseiseral.info · WhatsApp: +39 338 507 5019. Partita IVA: 00709170211 · CIN: P62QHVQ. Trotz sorgfältiger inhaltlicher Kontrolle übernehmen wir keine Haftung für die Inhalte externer Links.</p>
   </div>
 </div>
 
-<!-- Impressum Modal -->
-<div class="legal-modal" id="imprintModal">
-  <div class="legal-modal-content">
-    <button class="legal-close" onclick="closeModal('imprintModal')">&times;</button>
-    <h2 data-i18n="imprint_title">Impressum</h2>
+<!-- TWEAKS -->
+<div class="tweaks-panel" id="tweaksPanel">
+  <h4 data-i18n="tweaks_title">Tweaks</h4>
+  <p class="subtitle" data-i18n="tweaks_subtitle">Design-Varianten</p>
 
-    <h3 data-i18n="imprint_h1">Angaben gemäß D.Lgs. 70/2003</h3>
-    <p>
-      Robert Santer<br>
-      Saltriastraße 2<br>
-      39040 Seiser Alm (BZ)<br>
-      Italien
-    </p>
-
-    <h3 data-i18n="imprint_h2">Kontakt</h3>
-    <p>
-      E-Mail: info@chaletseiseral.info<br>
-      WhatsApp: <a href="https://wa.me/393385075019" target="_blank" rel="noopener">+39 338 507 5019</a>
-    </p>
-
-    <h3 data-i18n="imprint_h3">Steuerdaten</h3>
-    <p>
-      Partita IVA: 00709170211<br>
-      CIN: P62QHVQ
-    </p>
-
-    <h3 data-i18n="imprint_h4">Haftungshinweis</h3>
-    <p data-i18n="imprint_p4">Trotz sorgfältiger inhaltlicher Kontrolle übernehmen wir keine Haftung für die Inhalte externer Links. Für den Inhalt der verlinkten Seiten sind ausschließlich deren Betreiber verantwortlich.</p>
+  <div class="tweak-group">
+    <label data-i18n="tw_palette">Farbpalette</label>
+    <div class="tweak-options three">
+      <button data-tw="palette:warm" data-i18n="tw_palette_warm" class="active">Warm</button>
+      <button data-tw="palette:cool" data-i18n="tw_palette_cool">Kühl</button>
+      <button data-tw="palette:mono" data-i18n="tw_palette_mono">Mono</button>
+    </div>
   </div>
+
+  <div class="tweak-group">
+    <label data-i18n="tw_typo">Typografie</label>
+    <div class="tweak-options">
+      <button data-tw="typo:editorial" data-i18n="tw_typo_editorial">Editorial</button>
+      <button data-tw="typo:classic" data-i18n="tw_typo_classic">Klassisch</button>
+      <button data-tw="typo:grotesk" data-i18n="tw_typo_grotesk" class="active">Grotesk</button>
+      <button data-tw="typo:allserif" data-i18n="tw_typo_allserif">Alles Serif</button>
+    </div>
+  </div>
+
+  <div class="tweak-group">
+    <label data-i18n="tw_hero">Hero-Stil</label>
+    <div class="tweak-options three">
+      <button data-tw="hero:fullbleed" data-i18n="tw_hero_fullbleed" class="active">Vollbild</button>
+      <button data-tw="hero:typeled" data-i18n="tw_hero_typeled">Typo-zentriert</button>
+      <button data-tw="hero:split" data-i18n="tw_hero_split">Split</button>
+    </div>
+  </div>
+
 </div>
 
 <script>
-/* ═══════════════════════════════════════
-   TRANSLATIONS
-   ═══════════════════════════════════════ */
-const T = {
+/* Translations — DE / IT / EN */
+window.T = {
   de: {
-    nav_chalet: 'Das Chalet',
-    nav_highlights: 'Highlights',
-    nav_geschichte: 'Geschichte',
-    nav_anreise: 'Anreise',
-    nav_seiseralm: 'Die Region',
-    nav_cta: 'Anfragen',
+    nav_chalet: 'Das Chalet', nav_highlights: 'Highlights', nav_geschichte: 'Geschichte', nav_anreise: 'Anreise', nav_seiseralm: 'Die Region', nav_cta: 'Anfragen',
     hero_eyebrow: 'Seiser Alm · Südtirol · Dolomiten',
     hero_subtitle: 'Inmitten der größten Hochalm Europas',
     hero_scroll: 'Entdecken',
     intro_eyebrow: 'Willkommen',
     intro_quote: '„Das Chalet befindet sich inmitten der größten Hochalm Europas, umgeben von imposanten Dolomiten-Gipfeln."',
     intro_text: 'Im Sommer bedecken Blumen die weiten grünen Flächen, im Winter glitzern die Schneekristalle. Unser traditionelles Holzchalet ist ein Rückzugsort für alle, die echte Bergstille suchen.',
-    room1_eyebrow: 'Stube & Küche',
-    room1_title: 'Das Herzstück',
+    room1_eyebrow: 'Stube & Küche', room1_title: 'Das Herzstück',
     room1_text: 'Das Herzstück des Chalets ist die gemütliche Stube, mit viel Holz und einem großen Esstisch lädt sie zum Zusammensitzen, Spielen und Genießen ein. Gleich daneben befindet sich die gut ausgestattete Küche mit Ceran-Kochfeld, geräumigem Kühlschrank und allem, was man für entspannte Ferientage braucht.',
-    room2_eyebrow: 'Schlafzimmer',
-    room2_title: 'Geborgenheit & Stille',
+    room2_eyebrow: 'Schlafzimmer', room2_title: 'Geborgenheit & Stille',
     room2_text: 'Mit viel Holz und alpinem Flair gestaltet, strahlen die Räume eine wohltuende Geborgenheit aus. Der Blick nach draußen erinnert daran, dass die Natur zum Greifen nah ist. Bequeme Betten und liebevolle Details schaffen den idealen Ort für erholsame Nächte auf der Seiser Alm.',
-    room3_eyebrow: 'Zwei Terrassen',
-    room3_title: 'Ost & West',
+    room3_eyebrow: 'Zwei Terrassen', room3_title: 'Ost & West',
     room3_text: 'Die zwei Terrassen richten sich nach Osten und nach Westen – so kann man bei Sonnenauf- und Untergang die alpine Umgebung genießen. Entweder Lang und Plattkofel oder Richtung Schlern mit seiner markanten Santner Spitze.',
-    room4_eyebrow: 'Das Bad',
-    room4_title: 'Schlicht & Funktional',
+    room4_eyebrow: 'Das Bad', room4_title: 'Schlicht & Funktional',
     room4_text: 'Schlicht und funktional – das Bad bietet alles, was man für eine entspannte Auszeit in den Bergen braucht. Neben Dusche, Waschbecken und WC steht auch eine Waschmaschine zur Verfügung, ideal für längere Aufenthalte oder aktive Tage draußen.',
-    highlights_eyebrow: 'Auf einen Blick',
-    highlights_title: 'Was Sie <em>erwartet</em>',
-    hl1_title: 'Panorama-Aussicht',
-    hl1_text: 'Lang, Plattkofel, Schlern und die Santner Spitze – eingerahmt durch die eigenen Fenster.',
-    hl2_title: 'Ski-in / Ski-out',
-    hl2_text: 'Direkt an den Pisten. Skier an der Haustür anschnallen und los.',
-    hl3_title: 'Ganzjährig',
-    hl3_text: 'Skiurlaub im Winter, Blütenwiesen im Sommer. Für 4–7 Personen.',
-    geschichte_eyebrow: 'Seit 1938',
-    geschichte_title: 'Eine Geschichte<br><em>aus dem Berg</em>',
-    geschichte_text: 'Das Chalet wurde nicht immer nur zur Übernachtung genutzt, sondern diente seit seiner Erbauung 1938 bis 1970 als Talstation des ersten Skibetriebes „Panorama Lift" auf der Seiseralm. Die Seiser Alm erhielt 1935/36 mit der Bahn von St. Ulrich ihre erste Erschließung – und 1938/39 ging mit der „Slittovia-Joch-Panorama" die erste Liftanlage in Betrieb. Die einstige Stahlstation dieser Bahn wurde zur gemütlichen Berghütte Chalet Seiser Alm umgebaut, in der Gäste heute übernachten.',
-    anreise_eyebrow: 'Lage & Anreise',
-    anreise_title: 'Wie Sie <em>zu uns finden</em>',
+    highlights_eyebrow: 'Auf einen Blick', highlights_title: 'Was Sie <em>erwartet</em>',
+    hl1_title: 'Panorama-Aussicht', hl1_text: 'Lang, Plattkofel, Schlern und die Santner Spitze – eingerahmt durch die eigenen Fenster.',
+    hl2_title: 'Ski-in / Ski-out', hl2_text: 'Direkt an den Pisten. Skier an der Haustür anschnallen und los.',
+    hl3_title: 'Ganzjährig', hl3_text: 'Skiurlaub im Winter, Blütenwiesen im Sommer. Für 4–7 Personen.',
+    geschichte_eyebrow: 'Seit 1938', geschichte_title: 'Wo die Berge<br><em>Geschichte schrieben</em>',
+    geschichte_text: 'Das Chalet wurde nicht immer nur zur Übernachtung genutzt, sondern diente seit seiner Erbauung 1938 bis 1970 als Talstation des ersten Skibetriebes „Panorama Lift" auf der Seiseralm. Die Seiser Alm erhielt 1935/36 mit der Bahn von St. Ulrich ihre erste Erschließung – und 1938/39 ging mit der „Slittovia-Joch-Panorama" die erste Liftanlage in Betrieb. Die einstige Talstation dieser Bahn wurde zur gemütlichen Berghütte Chalet Seiser Alm umgebaut, in der Gäste heute übernachten.',
+    anreise_eyebrow: 'Lage & Anreise', anreise_title: 'Wie Sie <em>zu uns finden</em>',
     anreise_lage_label: 'Die Lage',
     anreise_lage: 'Das Chalet befindet sich inmitten des Naturparks Schlern. Es liegt ruhig direkt neben Wanderwegen und Skipisten. Compatsch mit seinen kleinen Geschäften für Lebensmittel oder Zeitungen, Ski- und Radverleih ist fußläufig in 10 Minuten erreichbar. Dort befinden sich auch ein Café und ein paar Restaurants sowie die öffentlichen Verkehrsmittel mit Bus und Seilbahn.',
     anreise_fahr_label: 'Fahrgenehmigung',
@@ -1324,458 +1752,716 @@ const T = {
     anreise_auto_label: 'Mit dem Auto',
     anreise_auto: 'Von Norden: Ausfahrt „Klausen", über Waidbruck und Kastelruth auf die Seiser Alm.<br>Von Süden: Ausfahrt „Bozen Nord", über Blumau, Völs und Seis auf die Seiser Alm.<br>Das Chalet liegt direkt hinter Compatsch.',
     anreise_nav: 'Route in Google Maps öffnen',
-    seiseralm_eyebrow: 'Die Region',
-    seiseralm_title: 'Die <em>Seiser Alm</em>',
+    seiseralm_eyebrow: 'Die Region', seiseralm_title: 'Die <em>Seiser Alm</em>',
     seiseralm_text: 'Die Seiser Alm – Europas größtes Hochplateau – erstreckt sich auf 56 km² in 1.680–2.350 m Höhe vor der spektakulären Kulisse der Dolomiten (UNESCO-Welterbe). Seit über 1.000 Jahren dient die Alm als Viehweide; um 1900 öffneten Bauern ihre Hütten für Gäste.',
-    kontakt_eyebrow: 'Kontakt',
-    kontakt_title: 'Ihr Aufenthalt<br><em>beginnt hier</em>',
+    kontakt_eyebrow: 'Kontakt', kontakt_title: 'Ihr Aufenthalt<br><em>beginnt hier</em>',
     kontakt_text: 'Schreiben Sie uns – wir melden uns innerhalb von 24 Stunden mit Verfügbarkeit und einem persönlichen Angebot.',
-    kontakt_addr_label: 'Adresse',
-    kontakt_email_label: 'E-Mail',
-    kontakt_tel_label: 'Telefon',
-    kontakt_wa: 'auf Anfrage',
-    form_name: 'Name',
-    form_email: 'E-Mail',
-    form_phone: 'Telefon (optional)',
-    form_checkin: 'Anreise',
-    form_checkout: 'Abreise',
-    form_adults: 'Erwachsene',
-    form_children: 'Kinder',
-    form_message: 'Nachricht',
-    form_submit: 'Anfrage senden',
-    form_success: 'Vielen Dank für Ihre Anfrage! Wir melden uns innerhalb von 24 Stunden.',
-    form_error: 'Entschuldigung, die Anfrage konnte nicht gesendet werden. Bitte versuchen Sie es erneut oder schreiben Sie uns direkt per E-Mail.',
-    footer_privacy: 'Datenschutz',
-    footer_imprint: 'Impressum',
-    kontakt_wa_link: 'Chat starten',
+    kontakt_addr_label: 'Adresse', kontakt_email_label: 'E-Mail', kontakt_wa_link: 'Chat starten',
+    form_name: 'Name', form_email: 'E-Mail', form_phone: 'Telefon (optional)',
+    form_checkin: 'Anreise', form_checkout: 'Abreise',
+    form_adults: 'Erwachsene', form_children: 'Kinder',
+    form_message: 'Nachricht', form_submit: 'Anfrage senden',
+    form_err_name: 'Bitte geben Sie Ihren Namen ein.',
+    form_err_email: 'Bitte eine gültige E-Mail-Adresse eingeben.',
+    form_err_dates: 'Bitte wählen Sie An- und Abreisedaten.',
+    form_err_daterange: 'Abreise muss nach der Anreise liegen.',
+    form_err_guests: 'Mindestens 1 Gast ist erforderlich.',
+    form_success_title: 'Vielen Dank',
+    form_success_text: 'Ihre Anfrage ist bei uns eingegangen. Wir melden uns innerhalb von 24 Stunden mit Verfügbarkeit und einem persönlichen Angebot.',
+    form_success_back: 'Neue Anfrage stellen',
+    footer_privacy: 'Datenschutz', footer_imprint: 'Impressum',
+    tweaks_title: 'Tweaks', tweaks_subtitle: 'Design-Varianten',
+    tw_palette: 'Farbpalette', tw_palette_warm: 'Warm', tw_palette_cool: 'Kühl', tw_palette_mono: 'Mono',
+    tw_typo: 'Typografie', tw_typo_editorial: 'Editorial', tw_typo_classic: 'Klassisch', tw_typo_grotesk: 'Grotesk', tw_typo_allserif: 'Alles Serif',
+    tw_hero: 'Hero-Stil', tw_hero_fullbleed: 'Vollbild', tw_hero_typeled: 'Typo-zentriert', tw_hero_split: 'Split',
+    tw_season: 'Jahreszeit', tw_season_summer: 'Sommer', tw_season_winter: 'Winter',
+    season_summer: 'Sommer', season_winter: 'Winter',
     privacy_title: 'Datenschutzerklärung',
-    privacy_h1: 'Verantwortlicher',
-    privacy_h2: '1. Erhobene Daten',
-    privacy_p2: 'Beim Besuch dieser Website werden automatisch folgende Daten durch den Webserver erfasst: IP-Adresse, Datum und Uhrzeit des Zugriffs, aufgerufene Seite, Browsertyp und Betriebssystem. Diese Daten sind technisch notwendig für die Auslieferung der Website und werden nicht mit anderen Datenquellen zusammengeführt.',
-    privacy_h3: '2. Kontaktformular',
-    privacy_p3: 'Wenn Sie das Kontaktformular nutzen, werden Ihre Angaben (Name, E-Mail, Reisedaten, Personenzahl, Nachricht) per E-Mail an uns weitergeleitet. Die Daten werden ausschließlich zur Bearbeitung Ihrer Anfrage verwendet und nicht an Dritte weitergegeben. Rechtsgrundlage: Art. 6 Abs. 1 lit. b DSGVO (vorvertragliche Maßnahmen).',
-    privacy_h4: '3. Google Maps',
-    privacy_p4: 'Diese Website bietet die Möglichkeit, OpenStreetMap zur Kartenanzeige zu nutzen. Google Maps wird erst nach Ihrer ausdrücklichen Einwilligung geladen. Dabei werden Daten (u.a. Ihre IP-Adresse) an Google LLC übertragen. Rechtsgrundlage: Art. 6 Abs. 1 lit. a DSGVO (Einwilligung). Sie können Ihre Einwilligung jederzeit widerrufen, indem Sie die gespeicherten Daten im Browser löschen.',
-    privacy_h5: '4. Google Fonts',
-    privacy_p5: 'Diese Website nutzt Google Fonts zur einheitlichen Darstellung von Schriftarten. Beim Aufruf der Seite lädt Ihr Browser die benötigten Schriftarten von Google-Servern. Dabei wird Ihre IP-Adresse an Google übertragen.',
-    privacy_h6: '5. Cookies & Tracking',
-    privacy_p6: 'Diese Website setzt keine Tracking-Cookies und verwendet keine Analyse-Tools. Es wird lediglich ein Eintrag im lokalen Speicher Ihres Browsers (localStorage) gesetzt, um Ihre Entscheidung bezüglich Google Maps zu speichern.',
-    privacy_h7: '6. Speicherdauer',
-    privacy_p7: 'Anfragen über das Kontaktformular werden bis zur Bearbeitung gespeichert, maximal jedoch 12 Monate. Server-Logdaten werden nach 30 Tagen automatisch gelöscht.',
-    privacy_h8: '7. Ihre Rechte',
-    privacy_p8: 'Sie haben das Recht auf Auskunft, Berichtigung, Löschung, Einschränkung der Verarbeitung, Datenübertragbarkeit und Widerspruch. Kontaktieren Sie uns unter info@chaletseiseral.info.',
+    privacy_body: 'Verantwortlicher: Robert Santer, Saltriastraße 2, 39040 Seiser Alm (BZ), Italien. E-Mail: info@chaletseiseral.info · CIN: P62QHVQ. Diese Website setzt keine Tracking-Cookies und verwendet keine Analyse-Tools. Ihre Angaben im Kontaktformular werden ausschließlich zur Bearbeitung Ihrer Anfrage verwendet und nicht an Dritte weitergegeben. Rechtsgrundlage: Art. 6 Abs. 1 lit. b DSGVO. Sie haben das Recht auf Auskunft, Berichtigung, Löschung, Einschränkung der Verarbeitung, Datenübertragbarkeit und Widerspruch.',
     imprint_title: 'Impressum',
-    imprint_h1: 'Angaben gemäß D.Lgs. 70/2003',
-    imprint_h2: 'Kontakt',
-    imprint_h3: 'Steuerdaten',
-    imprint_h4: 'Haftungshinweis',
-    imprint_p4: 'Trotz sorgfältiger inhaltlicher Kontrolle übernehmen wir keine Haftung für die Inhalte externer Links. Für den Inhalt der verlinkten Seiten sind ausschließlich deren Betreiber verantwortlich.'
+    imprint_body: 'Robert Santer · Saltriastraße 2 · 39040 Seiser Alm (BZ) · Italien. E-Mail: info@chaletseiseral.info · WhatsApp: +39 338 507 5019. Partita IVA: 00709170211 · CIN: P62QHVQ. Trotz sorgfältiger inhaltlicher Kontrolle übernehmen wir keine Haftung für die Inhalte externer Links.'
   },
   it: {
-    nav_chalet: 'Lo Chalet',
-    nav_highlights: 'Highlights',
-    nav_geschichte: 'Storia',
-    nav_anreise: 'Come arrivare',
-    nav_seiseralm: 'La Regione',
-    nav_cta: 'Richiesta',
+    nav_chalet: 'Lo Chalet', nav_highlights: 'Highlights', nav_geschichte: 'Storia', nav_anreise: 'Come arrivare', nav_seiseralm: 'La Regione', nav_cta: 'Richiesta',
     hero_eyebrow: 'Alpe di Siusi · Alto Adige · Dolomiti',
-    hero_subtitle: 'Nel cuore dell\'altipiano più grande d\'Europa',
+    hero_subtitle: "Nel cuore dell'altipiano più grande d'Europa",
     hero_scroll: 'Scopri',
     intro_eyebrow: 'Benvenuti',
     intro_quote: '„Lo chalet si trova nel cuore del più grande altipiano d\'Europa, circondato dalle imponenti vette delle Dolomiti."',
     intro_text: 'In estate i fiori ricoprono i vasti prati verdi, in inverno brillano i cristalli di neve. Il nostro tradizionale chalet in legno è un rifugio per chi cerca il vero silenzio della montagna.',
-    room1_eyebrow: 'Stube & Cucina',
-    room1_title: 'Il cuore dello chalet',
-    room1_text: 'Il cuore dello chalet è l\'accogliente stube, con tanto legno e un grande tavolo da pranzo che invita a stare insieme, giocare e gustare. Accanto si trova la cucina ben attrezzata con piano cottura in vetroceramica, frigorifero capiente e tutto il necessario per giorni di vacanza rilassanti.',
-    room2_eyebrow: 'Camere da letto',
-    room2_title: 'Calore & Silenzio',
-    room2_text: 'Arredate con tanto legno e fascino alpino, le camere trasmettono un piacevole senso di protezione. Lo sguardo verso l\'esterno ricorda che la natura è a portata di mano. Letti comodi e dettagli curati creano il luogo ideale per notti riposanti sull\'Alpe di Siusi.',
-    room3_eyebrow: 'Due Terrazze',
-    room3_title: 'Est & Ovest',
-    room3_text: 'Le due terrazze sono orientate a est e a ovest – così si può godere dell\'ambiente alpino all\'alba e al tramonto. Da un lato il Sassolungo e il Sassopiatto, dall\'altro lo Sciliar con la sua caratteristica Punta Santner.',
-    room4_eyebrow: 'Il Bagno',
-    room4_title: 'Semplice & Funzionale',
-    room4_text: 'Semplice e funzionale – il bagno offre tutto ciò che serve per una pausa rilassante in montagna. Oltre a doccia, lavabo e WC, è disponibile anche una lavatrice, ideale per soggiorni più lunghi o giornate attive all\'aperto.',
-    highlights_eyebrow: 'In sintesi',
-    highlights_title: 'Cosa vi <em>aspetta</em>',
-    hl1_title: 'Vista panoramica',
-    hl1_text: 'Sassolungo, Sassopiatto, Sciliar e Punta Santner – incorniciati dalle proprie finestre.',
-    hl2_title: 'Ski-in / Ski-out',
-    hl2_text: 'Direttamente sulle piste. Allacciate gli sci alla porta di casa e partite.',
-    hl3_title: 'Tutto l\'anno',
-    hl3_text: 'Sci in inverno, prati fioriti in estate. Per 4–7 persone.',
-    geschichte_eyebrow: 'Dal 1938',
-    geschichte_title: 'Una storia<br><em>dalla montagna</em>',
-    geschichte_text: 'Lo chalet non è sempre stato utilizzato solo per il pernottamento, ma dalla sua costruzione nel 1938 fino al 1970 è servito come stazione a valle del primo impianto sciistico „Panorama Lift" sull\'Alpe di Siusi. L\'Alpe di Siusi ricevette nel 1935/36 il suo primo collegamento con la ferrovia da Ortisei – e nel 1938/39 entrò in funzione con la „Slittovia-Joch-Panorama" il primo impianto di risalita. L\'ex stazione di questa funivia è stata trasformata nell\'accogliente baita Chalet Seiser Alm, dove oggi gli ospiti possono pernottare.',
-    anreise_eyebrow: 'Posizione & Arrivo',
-    anreise_title: 'Come <em>raggiungerci</em>',
+    room1_eyebrow: 'Stube & Cucina', room1_title: 'Il cuore dello chalet',
+    room1_text: "Il cuore dello chalet è l'accogliente stube, con tanto legno e un grande tavolo da pranzo che invita a stare insieme, giocare e gustare. Accanto si trova la cucina ben attrezzata con piano cottura in vetroceramica, frigorifero capiente e tutto il necessario per giorni di vacanza rilassanti.",
+    room2_eyebrow: 'Camere da letto', room2_title: 'Calore & Silenzio',
+    room2_text: "Arredate con tanto legno e fascino alpino, le camere trasmettono un piacevole senso di protezione. Lo sguardo verso l'esterno ricorda che la natura è a portata di mano. Letti comodi e dettagli curati creano il luogo ideale per notti riposanti sull'Alpe di Siusi.",
+    room3_eyebrow: 'Due Terrazze', room3_title: 'Est & Ovest',
+    room3_text: "Le due terrazze sono orientate a est e a ovest – così si può godere dell'ambiente alpino all'alba e al tramonto. Da un lato il Sassolungo e il Sassopiatto, dall'altro lo Sciliar con la sua caratteristica Punta Santner.",
+    room4_eyebrow: 'Il Bagno', room4_title: 'Semplice & Funzionale',
+    room4_text: "Semplice e funzionale – il bagno offre tutto ciò che serve per una pausa rilassante in montagna. Oltre a doccia, lavabo e WC, è disponibile anche una lavatrice, ideale per soggiorni più lunghi o giornate attive all'aperto.",
+    highlights_eyebrow: 'In sintesi', highlights_title: 'Cosa vi <em>aspetta</em>',
+    hl1_title: 'Vista panoramica', hl1_text: 'Sassolungo, Sassopiatto, Sciliar e Punta Santner – incorniciati dalle proprie finestre.',
+    hl2_title: 'Ski-in / Ski-out', hl2_text: 'Direttamente sulle piste. Allacciate gli sci alla porta di casa e partite.',
+    hl3_title: "Tutto l'anno", hl3_text: 'Sci in inverno, prati fioriti in estate. Per 4–7 persone.',
+    geschichte_eyebrow: 'Dal 1938', geschichte_title: 'Dove le montagne<br><em>hanno scritto la storia</em>',
+    geschichte_text: "Lo chalet non è sempre stato utilizzato solo per il pernottamento, ma dalla sua costruzione nel 1938 fino al 1970 è servito come stazione a valle del primo impianto sciistico „Panorama Lift\" sull'Alpe di Siusi. L'Alpe di Siusi ricevette nel 1935/36 il suo primo collegamento con la ferrovia da Ortisei – e nel 1938/39 entrò in funzione con la „Slittovia-Joch-Panorama\" il primo impianto di risalita. L'ex stazione di questa funivia è stata trasformata nell'accogliente baita Chalet Seiser Alm, dove oggi gli ospiti possono pernottare.",
+    anreise_eyebrow: 'Posizione & Arrivo', anreise_title: 'Come <em>raggiungerci</em>',
     anreise_lage_label: 'La posizione',
-    anreise_lage: 'Lo chalet si trova nel cuore del Parco Naturale dello Sciliar. È situato in posizione tranquilla, direttamente accanto a sentieri escursionistici e piste da sci. Compatsch con i suoi piccoli negozi di alimentari e giornali, noleggio sci e biciclette è raggiungibile a piedi in 10 minuti. Lì si trovano anche un caffè e alcuni ristoranti nonché i mezzi di trasporto pubblici con autobus e funivia.',
+    anreise_lage: "Lo chalet si trova nel cuore del Parco Naturale dello Sciliar. È situato in posizione tranquilla, direttamente accanto a sentieri escursionistici e piste da sci. Compatsch con i suoi piccoli negozi di alimentari e giornali, noleggio sci e biciclette è raggiungibile a piedi in 10 minuti. Lì si trovano anche un caffè e alcuni ristoranti nonché i mezzi di trasporto pubblici con autobus e funivia.",
     anreise_fahr_label: 'Permesso di transito',
-    anreise_fahr: 'Lo chalet si trova sull\'Alpe di Siusi a traffico limitato, chiusa al traffico individuale tutti i giorni dalle 09:00 alle 17:00. Prima della partenza vi invieremo il permesso di transito per raggiungere lo chalet con la vostra auto. Con questo siete autorizzati a percorrere il tratto stradale indicato prima delle 10:00 e dopo le 17:00 durante il vostro soggiorno, ad arrivare e partire senza limitazioni di orario (lo chalet è a vostra disposizione dal giorno di arrivo dalle 12:00 e fino alle 10:00 del giorno di partenza) e a parcheggiare direttamente accanto allo chalet durante il soggiorno.',
+    anreise_fahr: "Lo chalet si trova sull'Alpe di Siusi a traffico limitato, chiusa al traffico individuale tutti i giorni dalle 09:00 alle 17:00. Prima della partenza vi invieremo il permesso di transito per raggiungere lo chalet con la vostra auto. Con questo siete autorizzati a percorrere il tratto stradale indicato prima delle 10:00 e dopo le 17:00 durante il vostro soggiorno, ad arrivare e partire senza limitazioni di orario e a parcheggiare direttamente accanto allo chalet.",
     anreise_winter_label: 'Inverno',
     anreise_winter: 'Per un arrivo sicuro in inverno consigliamo pneumatici invernali e catene da neve (o pneumatici invernali con trazione integrale). In inverno lo chalet purtroppo non è raggiungibile direttamente in auto. Potrete parcheggiare comodamente al parcheggio sotto il ristorante Panoramalift. Per il trasporto dei bagagli è disponibile una slitta non motorizzata.',
     anreise_auto_label: 'In auto',
-    anreise_auto: 'Da nord: uscita „Chiusa", via Ponte Gardena e Castelrotto verso l\'Alpe di Siusi.<br>Da sud: uscita „Bolzano Nord", via Prato Isarco, Fiè e Siusi verso l\'Alpe di Siusi.<br>Lo chalet si trova subito dopo Compatsch.',
+    anreise_auto: "Da nord: uscita „Chiusa\", via Ponte Gardena e Castelrotto verso l'Alpe di Siusi.<br>Da sud: uscita „Bolzano Nord\", via Prato Isarco, Fiè e Siusi verso l'Alpe di Siusi.<br>Lo chalet si trova subito dopo Compatsch.",
     anreise_nav: 'Apri percorso in Google Maps',
-    seiseralm_eyebrow: 'La Regione',
-    seiseralm_title: 'L\'<em>Alpe di Siusi</em>',
-    seiseralm_text: 'L\'Alpe di Siusi – il più grande altipiano d\'Europa – si estende su 56 km² a 1.680–2.350 m di altitudine davanti allo spettacolare scenario delle Dolomiti (Patrimonio UNESCO). Da oltre 1.000 anni l\'alpeggio serve come pascolo; intorno al 1900 i contadini aprirono le loro baite agli ospiti.',
-    kontakt_eyebrow: 'Contatto',
-    kontakt_title: 'Il vostro soggiorno<br><em>inizia qui</em>',
+    seiseralm_eyebrow: 'La Regione', seiseralm_title: "L'<em>Alpe di Siusi</em>",
+    seiseralm_text: "L'Alpe di Siusi – il più grande altipiano d'Europa – si estende su 56 km² a 1.680–2.350 m di altitudine davanti allo spettacolare scenario delle Dolomiti (Patrimonio UNESCO). Da oltre 1.000 anni l'alpeggio serve come pascolo; intorno al 1900 i contadini aprirono le loro baite agli ospiti.",
+    kontakt_eyebrow: 'Contatto', kontakt_title: 'Il vostro soggiorno<br><em>inizia qui</em>',
     kontakt_text: 'Scriveteci – vi risponderemo entro 24 ore con disponibilità e un\'offerta personalizzata.',
-    kontakt_addr_label: 'Indirizzo',
-    kontakt_email_label: 'E-Mail',
-    kontakt_tel_label: 'Telefono',
-    kontakt_wa: 'su richiesta',
-    form_phone: 'Telefono (opzionale)',
-    form_error: 'Spiacenti, la richiesta non è stata inviata. Riprovi o ci scriva direttamente via e-mail.',
-    form_name: 'Nome',
-    form_email: 'E-Mail',
-    form_checkin: 'Arrivo',
-    form_checkout: 'Partenza',
-    form_adults: 'Adulti',
-    form_children: 'Bambini',
-    form_message: 'Messaggio',
-    form_submit: 'Invia richiesta',
-    form_success: 'Grazie per la vostra richiesta! Vi risponderemo entro 24 ore.',
-    footer_privacy: 'Privacy',
-    footer_imprint: 'Imprint',
-    kontakt_wa_link: 'Avvia chat',
+    kontakt_addr_label: 'Indirizzo', kontakt_email_label: 'E-Mail', kontakt_wa_link: 'Avvia chat',
+    form_name: 'Nome', form_email: 'E-Mail', form_phone: 'Telefono (opzionale)',
+    form_checkin: 'Arrivo', form_checkout: 'Partenza',
+    form_adults: 'Adulti', form_children: 'Bambini',
+    form_message: 'Messaggio', form_submit: 'Invia richiesta',
+    form_err_name: 'Inserisci il tuo nome.',
+    form_err_email: 'Inserisci un indirizzo e-mail valido.',
+    form_err_dates: 'Seleziona le date di arrivo e partenza.',
+    form_err_daterange: 'La partenza deve essere dopo l\'arrivo.',
+    form_err_guests: 'È richiesto almeno 1 ospite.',
+    form_success_title: 'Grazie',
+    form_success_text: 'Abbiamo ricevuto la vostra richiesta. Vi risponderemo entro 24 ore con disponibilità e un\'offerta personalizzata.',
+    form_success_back: 'Nuova richiesta',
+    footer_privacy: 'Privacy', footer_imprint: 'Imprint',
+    tweaks_title: 'Tweaks', tweaks_subtitle: 'Varianti di design',
+    tw_palette: 'Palette colore', tw_palette_warm: 'Caldo', tw_palette_cool: 'Freddo', tw_palette_mono: 'Mono',
+    tw_typo: 'Tipografia', tw_typo_editorial: 'Editorial', tw_typo_classic: 'Classica', tw_typo_grotesk: 'Grotesk', tw_typo_allserif: 'Tutto serif',
+    tw_hero: 'Stile Hero', tw_hero_fullbleed: 'Immersivo', tw_hero_typeled: 'Tipografico', tw_hero_split: 'Split',
+    tw_season: 'Stagione', tw_season_summer: 'Estate', tw_season_winter: 'Inverno',
+    season_summer: 'Estate', season_winter: 'Inverno',
     privacy_title: 'Informativa sulla privacy',
-    privacy_h1: 'Responsabile',
-    privacy_h2: '1. Dati raccolti',
-    privacy_p2: 'Quando visitate questo sito web, il server web raccoglie automaticamente i seguenti dati: indirizzo IP, data e ora di accesso, pagina visitata, tipo di browser e sistema operativo. Questi dati sono tecnicamente necessari per la fornitura del sito e non vengono combinati con altre fonti di dati.',
-    privacy_h3: '2. Modulo di contatto',
-    privacy_p3: 'Quando utilizzate il modulo di contatto, i vostri dati (nome, e-mail, date di viaggio, numero di persone, messaggio) vengono inoltrati a noi via e-mail. I dati vengono utilizzati esclusivamente per elaborare la vostra richiesta e non vengono trasmessi a terzi. Base giuridica: Art. 6 par. 1 lett. b GDPR (misure precontrattuali).',
-    privacy_h4: '3. Google Maps',
-    privacy_p4: 'Questo sito offre la possibilità di utilizzare Google Maps per la visualizzazione della mappa. Google Maps viene caricato solo dopo il vostro consenso esplicito. In tal caso, i dati (tra cui il vostro indirizzo IP) vengono trasmessi a Google LLC. Base giuridica: Art. 6 par. 1 lett. a GDPR (consenso). Potete revocare il vostro consenso in qualsiasi momento eliminando i dati memorizzati nel browser.',
-    privacy_h5: '4. Google Fonts',
-    privacy_p5: 'Questo sito utilizza Google Fonts per una visualizzazione uniforme dei caratteri. Quando visitate la pagina, il vostro browser carica i font necessari dai server di Google. Il vostro indirizzo IP viene trasmesso a Google.',
-    privacy_h6: '5. Cookie e tracciamento',
-    privacy_p6: 'Questo sito non utilizza cookie di tracciamento né strumenti di analisi. Viene memorizzata solo una voce nella memoria locale del browser (localStorage) per salvare la vostra decisione riguardo a Google Maps.',
-    privacy_h7: '6. Durata di conservazione',
-    privacy_p7: 'Le richieste tramite il modulo di contatto vengono conservate fino all\'elaborazione, per un massimo di 12 mesi. I dati dei log del server vengono eliminati automaticamente dopo 30 giorni.',
-    privacy_h8: '7. I vostri diritti',
-    privacy_p8: 'Avete il diritto di accesso, rettifica, cancellazione, limitazione del trattamento, portabilità dei dati e opposizione. Contattateci all\'indirizzo info@chaletseiseral.info.',
+    privacy_body: 'Responsabile: Robert Santer, Saltriastraße 2, 39040 Seiser Alm (BZ), Italia. E-Mail: info@chaletseiseral.info · CIN: P62QHVQ. Questo sito non utilizza cookie di tracciamento né strumenti di analisi. I dati del modulo di contatto vengono utilizzati esclusivamente per elaborare la richiesta e non trasmessi a terzi. Base giuridica: Art. 6 par. 1 lett. b GDPR. Avete il diritto di accesso, rettifica, cancellazione, limitazione del trattamento, portabilità dei dati e opposizione.',
     imprint_title: 'Imprint',
-    imprint_h1: 'Informazioni ai sensi del D.Lgs. 70/2003',
-    imprint_h2: 'Contatto',
-    imprint_h3: 'Dati fiscali',
-    imprint_h4: 'Avviso di responsabilità',
-    imprint_p4: 'Nonostante un attento controllo dei contenuti, non ci assumiamo alcuna responsabilità per i contenuti dei link esterni. I gestori delle pagine collegate sono gli unici responsabili dei loro contenuti.'
+    imprint_body: 'Robert Santer · Saltriastraße 2 · 39040 Seiser Alm (BZ) · Italia. E-Mail: info@chaletseiseral.info · WhatsApp: +39 338 507 5019. Partita IVA: 00709170211 · CIN: P62QHVQ. Nonostante un attento controllo dei contenuti, non ci assumiamo alcuna responsabilità per i contenuti dei link esterni.'
   },
   en: {
-    nav_chalet: 'The Chalet',
-    nav_highlights: 'Highlights',
-    nav_geschichte: 'History',
-    nav_anreise: 'Getting Here',
-    nav_seiseralm: 'The Region',
-    nav_cta: 'Enquire',
+    nav_chalet: 'The Chalet', nav_highlights: 'Highlights', nav_geschichte: 'History', nav_anreise: 'Getting Here', nav_seiseralm: 'The Region', nav_cta: 'Enquire',
     hero_eyebrow: 'Seiser Alm · South Tyrol · Dolomites',
-    hero_subtitle: 'In the heart of Europe\'s largest alpine plateau',
+    hero_subtitle: "In the heart of Europe's largest alpine plateau",
     hero_scroll: 'Discover',
     intro_eyebrow: 'Welcome',
     intro_quote: '"The chalet is located in the heart of Europe\'s largest alpine plateau, surrounded by the majestic peaks of the Dolomites."',
     intro_text: 'In summer, flowers blanket the vast green meadows; in winter, snow crystals glisten in the sun. Our traditional wooden chalet is a retreat for those seeking true mountain silence.',
-    room1_eyebrow: 'Living Room & Kitchen',
-    room1_title: 'The Heart of the Chalet',
+    room1_eyebrow: 'Living Room & Kitchen', room1_title: 'The Heart of the Chalet',
     room1_text: 'The heart of the chalet is the cosy living room, with abundant wood and a large dining table that invites you to gather, play and enjoy. Right next to it is the well-equipped kitchen with a ceramic hob, spacious fridge and everything you need for relaxed holiday days.',
-    room2_eyebrow: 'Bedrooms',
-    room2_title: 'Comfort & Silence',
-    room2_text: 'Designed with abundant wood and alpine flair, the rooms exude a soothing sense of shelter. The view outside reminds you that nature is within arm\'s reach. Comfortable beds and thoughtful details create the ideal place for restful nights on the Seiser Alm.',
-    room3_eyebrow: 'Two Terraces',
-    room3_title: 'East & West',
+    room2_eyebrow: 'Bedrooms', room2_title: 'Comfort & Silence',
+    room2_text: "Designed with abundant wood and alpine flair, the rooms exude a soothing sense of shelter. The view outside reminds you that nature is within arm's reach. Comfortable beds and thoughtful details create the ideal place for restful nights on the Seiser Alm.",
+    room3_eyebrow: 'Two Terraces', room3_title: 'East & West',
     room3_text: 'The two terraces face east and west – allowing you to enjoy the alpine surroundings at both sunrise and sunset. On one side, Langkofel and Plattkofel; on the other, the Schlern with its distinctive Santner peak.',
-    room4_eyebrow: 'The Bathroom',
-    room4_title: 'Simple & Functional',
+    room4_eyebrow: 'The Bathroom', room4_title: 'Simple & Functional',
     room4_text: 'Simple and functional – the bathroom offers everything you need for a relaxing mountain retreat. In addition to a shower, washbasin and WC, a washing machine is also available, ideal for longer stays or active days outdoors.',
-    highlights_eyebrow: 'At a Glance',
-    highlights_title: 'What <em>awaits</em> you',
-    hl1_title: 'Panoramic Views',
-    hl1_text: 'Langkofel, Plattkofel, Schlern and the Santner peak – framed by your own windows.',
-    hl2_title: 'Ski-in / Ski-out',
-    hl2_text: 'Right on the slopes. Clip on your skis at the front door and go.',
-    hl3_title: 'Year-round',
-    hl3_text: 'Skiing in winter, flowering meadows in summer. For 4–7 guests.',
-    geschichte_eyebrow: 'Since 1938',
-    geschichte_title: 'A story<br><em>from the mountain</em>',
+    highlights_eyebrow: 'At a Glance', highlights_title: 'What <em>awaits</em> you',
+    hl1_title: 'Panoramic Views', hl1_text: 'Langkofel, Plattkofel, Schlern and the Santner peak – framed by your own windows.',
+    hl2_title: 'Ski-in / Ski-out', hl2_text: 'Right on the slopes. Clip on your skis at the front door and go.',
+    hl3_title: 'Year-round', hl3_text: 'Skiing in winter, flowering meadows in summer. For 4–7 guests.',
+    geschichte_eyebrow: 'Since 1938', geschichte_title: 'Where the mountains<br><em>wrote history</em>',
     geschichte_text: 'The chalet was not always used solely for accommodation – from its construction in 1938 until 1970 it served as the base station of the first ski operation "Panorama Lift" on the Seiser Alm. The Seiser Alm received its first access in 1935/36 with the railway from St. Ulrich – and in 1938/39 the first lift system, the "Slittovia-Joch-Panorama", began operation. The former base station of this lift was converted into the cosy mountain chalet Chalet Seiser Alm, where guests stay today.',
-    anreise_eyebrow: 'Location & Getting Here',
-    anreise_title: 'How to <em>find us</em>',
+    anreise_eyebrow: 'Location & Getting Here', anreise_title: 'How to <em>find us</em>',
     anreise_lage_label: 'The Location',
-    anreise_lage: 'The chalet is located within the Schlern Nature Park. It sits quietly right next to hiking trails and ski slopes. Compatsch with its small shops for groceries or newspapers, ski and bike rental is reachable on foot in 10 minutes. There you\'ll also find a café and a few restaurants as well as public transport with bus and cable car.',
+    anreise_lage: "The chalet is located within the Schlern Nature Park. It sits quietly right next to hiking trails and ski slopes. Compatsch with its small shops for groceries or newspapers, ski and bike rental is reachable on foot in 10 minutes. There you'll also find a café and a few restaurants as well as public transport with bus and cable car.",
     anreise_fahr_label: 'Driving Permit',
-    anreise_fahr: 'The chalet is located on the traffic-calmed Seiser Alm, which is closed to private vehicles daily from 09:00–17:00. Before your journey we will send you the driving permit for access with your car to the chalet. This entitles you to use the designated road section before 10:00 and after 17:00 during your stay, to arrive and depart without time restrictions (the chalet is available from 12:00 on the day of arrival and until 10:00 on the day of departure) and to park directly next to the chalet during your stay.',
+    anreise_fahr: 'The chalet is located on the traffic-calmed Seiser Alm, which is closed to private vehicles daily from 09:00–17:00. Before your journey we will send you the driving permit for access with your car to the chalet. This entitles you to use the designated road section before 10:00 and after 17:00 during your stay, to arrive and depart without time restrictions and to park directly next to the chalet.',
     anreise_winter_label: 'Winter',
     anreise_winter: 'For safe winter travel we recommend winter tyres and snow chains (or winter tyres with all-wheel drive). In winter the chalet unfortunately cannot be reached directly by car. You can park conveniently at the car park below the restaurant Panoramalift. A non-motorised sledge is available for luggage transport.',
     anreise_auto_label: 'By Car',
     anreise_auto: 'From the north: exit "Klausen", via Waidbruck and Kastelruth to the Seiser Alm.<br>From the south: exit "Bozen Nord", via Blumau, Völs and Seis to the Seiser Alm.<br>The chalet is located just past Compatsch.',
     anreise_nav: 'Open route in Google Maps',
-    seiseralm_eyebrow: 'The Region',
-    seiseralm_title: 'The <em>Seiser Alm</em>',
-    seiseralm_text: 'The Seiser Alm – Europe\'s largest high-altitude plateau – spans 56 km² at 1,680–2,350 m above sea level against the spectacular backdrop of the Dolomites (UNESCO World Heritage). For over 1,000 years the alm has served as pastureland; around 1900 farmers began opening their huts to guests.',
-    kontakt_eyebrow: 'Contact',
-    kontakt_title: 'Your stay<br><em>begins here</em>',
+    seiseralm_eyebrow: 'The Region', seiseralm_title: 'The <em>Seiser Alm</em>',
+    seiseralm_text: "The Seiser Alm – Europe's largest high-altitude plateau – spans 56 km² at 1,680–2,350 m above sea level against the spectacular backdrop of the Dolomites (UNESCO World Heritage). For over 1,000 years the alm has served as pastureland; around 1900 farmers began opening their huts to guests.",
+    kontakt_eyebrow: 'Contact', kontakt_title: 'Your stay<br><em>begins here</em>',
     kontakt_text: 'Write to us – we will respond within 24 hours with availability and a personal offer.',
-    kontakt_addr_label: 'Address',
-    kontakt_email_label: 'Email',
-    kontakt_tel_label: 'Phone',
-    kontakt_wa: 'on request',
-    form_name: 'Name',
-    form_email: 'Email',
-    form_phone: 'Phone (optional)',
-    form_error: 'Sorry, the enquiry could not be sent. Please try again or email us directly.',
-    form_checkin: 'Check-in',
-    form_checkout: 'Check-out',
-    form_adults: 'Adults',
-    form_children: 'Children',
-    form_message: 'Message',
-    form_submit: 'Send enquiry',
-    form_success: 'Thank you for your enquiry! We will respond within 24 hours.',
-    footer_privacy: 'Privacy',
-    footer_imprint: 'Imprint',
-    kontakt_wa_link: 'Start chat',
+    kontakt_addr_label: 'Address', kontakt_email_label: 'Email', kontakt_wa_link: 'Start chat',
+    form_name: 'Name', form_email: 'Email', form_phone: 'Phone (optional)',
+    form_checkin: 'Check-in', form_checkout: 'Check-out',
+    form_adults: 'Adults', form_children: 'Children',
+    form_message: 'Message', form_submit: 'Send enquiry',
+    form_err_name: 'Please enter your name.',
+    form_err_email: 'Please enter a valid email address.',
+    form_err_dates: 'Please select check-in and check-out dates.',
+    form_err_daterange: 'Check-out must be after check-in.',
+    form_err_guests: 'At least 1 guest is required.',
+    form_success_title: 'Thank you',
+    form_success_text: 'Your enquiry has reached us. We will respond within 24 hours with availability and a personal offer.',
+    form_success_back: 'Send another enquiry',
+    footer_privacy: 'Privacy', footer_imprint: 'Imprint',
+    tweaks_title: 'Tweaks', tweaks_subtitle: 'Design variations',
+    tw_palette: 'Colour palette', tw_palette_warm: 'Warm', tw_palette_cool: 'Cool', tw_palette_mono: 'Mono',
+    tw_typo: 'Typography', tw_typo_editorial: 'Editorial', tw_typo_classic: 'Classic', tw_typo_grotesk: 'Grotesk', tw_typo_allserif: 'All serif',
+    tw_hero: 'Hero style', tw_hero_fullbleed: 'Full-bleed', tw_hero_typeled: 'Type-led', tw_hero_split: 'Split',
+    tw_season: 'Season', tw_season_summer: 'Summer', tw_season_winter: 'Winter',
+    season_summer: 'Summer', season_winter: 'Winter',
     privacy_title: 'Privacy Policy',
-    privacy_h1: 'Data Controller',
-    privacy_h2: '1. Data Collected',
-    privacy_p2: 'When you visit this website, the web server automatically collects the following data: IP address, date and time of access, page visited, browser type and operating system. This data is technically necessary for delivering the website and is not combined with other data sources.',
-    privacy_h3: '2. Contact Form',
-    privacy_p3: 'When you use the contact form, your information (name, email, travel dates, number of persons, message) is forwarded to us by email. The data is used exclusively to process your enquiry and is not shared with third parties. Legal basis: Art. 6(1)(b) GDPR (pre-contractual measures).',
-    privacy_h4: '3. Google Maps',
-    privacy_p4: 'This website offers the option to use Google Maps for map display. Google Maps is only loaded after your explicit consent. In this case, data (including your IP address) is transmitted to Google LLC. Legal basis: Art. 6(1)(a) GDPR (consent). You may revoke your consent at any time by clearing stored data in your browser.',
-    privacy_h5: '4. Google Fonts',
-    privacy_p5: 'This website uses Google Fonts for consistent font display. When you visit the page, your browser loads the required fonts from Google servers. Your IP address is transmitted to Google.',
-    privacy_h6: '5. Cookies & Tracking',
-    privacy_p6: 'This website does not use tracking cookies or analytics tools. Only a localStorage entry is set in your browser to save your decision regarding Google Maps.',
-    privacy_h7: '6. Data Retention',
-    privacy_p7: 'Enquiries via the contact form are stored until processed, for a maximum of 12 months. Server log data is automatically deleted after 30 days.',
-    privacy_h8: '7. Your Rights',
-    privacy_p8: 'You have the right to access, rectification, erasure, restriction of processing, data portability and objection. Contact us at info@chaletseiseral.info.',
+    privacy_body: 'Data controller: Robert Santer, Saltriastraße 2, 39040 Seiser Alm (BZ), Italy. Email: info@chaletseiseral.info · CIN: P62QHVQ. This website does not use tracking cookies or analytics tools. Your contact-form data is used exclusively to process your enquiry and is not shared with third parties. Legal basis: Art. 6(1)(b) GDPR. You have the right to access, rectification, erasure, restriction of processing, data portability and objection.',
     imprint_title: 'Legal Notice',
-    imprint_h1: 'Information pursuant to D.Lgs. 70/2003',
-    imprint_h2: 'Contact',
-    imprint_h3: 'Tax Information',
-    imprint_h4: 'Liability Notice',
-    imprint_p4: 'Despite careful content review, we assume no liability for the content of external links. The operators of linked pages are solely responsible for their content.'
+    imprint_body: 'Robert Santer · Saltriastraße 2 · 39040 Seiser Alm (BZ) · Italy. Email: info@chaletseiseral.info · WhatsApp: +39 338 507 5019. Partita IVA: 00709170211 · CIN: P62QHVQ. Despite careful content review, we assume no liability for the content of external links.'
   }
 };
 
-let currentLang = 'de';
+</script>
+<script>
+/* App behaviour: i18n, scroll-spy, lightbox, form, map, tweaks */
+(function(){
+  const T = window.T;
+  let currentLang = localStorage.getItem('csa_lang') || 'de';
 
-function setLang(lang) {
-  currentLang = lang;
-  document.documentElement.lang = lang;
-  document.querySelectorAll('[data-lang-btn]').forEach(btn => {
-    btn.classList.toggle('active', btn.dataset.langBtn === lang);
-  });
-  document.querySelectorAll('[data-i18n]').forEach(el => {
-    const key = el.dataset.i18n;
-    if (T[lang] && T[lang][key]) {
-      el.innerHTML = T[lang][key];
-    }
-  });
-}
-
-/* ═══════════════════════════════════════
-   SCROLL-RESTORE: beim Reload immer oben starten
-   (Bei Klick auf einen normalen Deep-Link mit #hash bleibt die Sprung-Navigation aber erhalten)
-   ═══════════════════════════════════════ */
-if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
-(function() {
-  const navType = performance.getEntriesByType &&
-                  performance.getEntriesByType('navigation')[0] &&
-                  performance.getEntriesByType('navigation')[0].type;
-  if (navType === 'reload' || navType === 'back_forward') {
-    if (location.hash) {
-      history.replaceState(null, '', location.pathname + location.search);
-    }
-    window.scrollTo(0, 0);
+  /* ------------- i18n ------------- */
+  function applyLang(lang) {
+    currentLang = lang;
+    localStorage.setItem('csa_lang', lang);
+    document.documentElement.lang = lang;
+    document.querySelectorAll('[data-lang-btn]').forEach(b => {
+      b.classList.toggle('active', b.dataset.langBtn === lang);
+    });
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+      const key = el.dataset.i18n;
+      if (T[lang] && T[lang][key] != null) el.innerHTML = T[lang][key];
+    });
+    document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+      const key = el.dataset.i18nPlaceholder;
+      if (T[lang] && T[lang][key] != null) el.placeholder = T[lang][key];
+    });
+    document.querySelectorAll('[data-i18n-aria]').forEach(el => {
+      const key = el.dataset.i18nAria;
+      if (T[lang] && T[lang][key] != null) el.setAttribute('aria-label', T[lang][key]);
+    });
+    // Update marker label if map live
+    const mlabel = document.querySelector('.marker-label');
+    if (mlabel) mlabel.innerHTML = 'Chalet <em>Seiser Alm</em>';
   }
+  window.setLang = applyLang;
+
+  /* ------------- Nav scroll + scroll-spy ------------- */
+  const nav = document.getElementById('mainNav');
+  const sections = ['chalet','highlights','geschichte','anreise','seiseralm'];
+  const navLinks = Array.from(document.querySelectorAll('.nav-links a, .nav-mobile-overlay a'));
+
+  function onScroll() {
+    nav.classList.toggle('scrolled', window.scrollY > 80);
+    // scroll-spy
+    const y = window.scrollY + 140;
+    let active = null;
+    for (const id of sections) {
+      const s = document.getElementById(id);
+      if (!s) continue;
+      if (s.offsetTop <= y) active = id;
+    }
+    navLinks.forEach(a => {
+      const href = a.getAttribute('href') || '';
+      a.classList.toggle('active', href === '#' + active);
+    });
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+
+  /* ------------- Mobile menu ------------- */
+  window.toggleMobile = function() {
+    const menu = document.getElementById('mobileMenu');
+    const h = document.getElementById('hamburger');
+    menu.classList.toggle('open');
+    h.classList.toggle('open');
+    document.body.style.overflow = menu.classList.contains('open') ? 'hidden' : '';
+  };
+  window.closeMobile = function() {
+    document.getElementById('mobileMenu').classList.remove('open');
+    document.getElementById('hamburger').classList.remove('open');
+    document.body.style.overflow = '';
+  };
+
+  /* ------------- Fade-in ------------- */
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); }
+    });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.fade-in').forEach(el => io.observe(el));
+
+  /* ------------- Lightbox ------------- */
+  const galleryItems = [
+    { src: 'img/intro.jpg', cap: 'Chalet Seiser Alm · Almlandschaft' },
+    { src: 'img/chalet-vorderansicht.jpg', cap: 'Chalet · Vorderansicht' },
+    { src: 'img/chalet-blumenwiese.jpg', cap: 'Chalet · Blumenwiese im Sommer' },
+    { src: 'img/chalet-terrasse-aussen.jpg', cap: 'Chalet · Terrasse außen' },
+    { src: 'img/terrasse.jpg', cap: 'Terrasse · Ost & West' },
+    { src: 'img/stube.jpg', cap: 'Stube & Küche' },
+    { src: 'img/stube-essecke.jpg', cap: 'Stube · Essecke' },
+    { src: 'img/kueche-spuele.jpg', cap: 'Küche · Spüle' },
+    { src: 'img/kueche-holzherd.jpg', cap: 'Küche · Historischer Holzherd' },
+    { src: 'img/schlafzimmer.jpg', cap: 'Schlafzimmer' },
+    { src: 'img/bad.jpg', cap: 'Badezimmer' },
+    { src: 'img/bad-dusche.jpg', cap: 'Bad · Dusche' },
+    { src: 'img/gaeste-wc.jpg', cap: 'Gäste-WC' },
+    { src: 'img/seiseralm.jpg', cap: 'Seiser Alm · Panorama' },
+    { src: 'img/slittovia.jpg', cap: 'Slittovia Joch-Panorama · ca. 1938' }
+  ];
+  const lb = document.getElementById('lightbox');
+  const lbImg = document.getElementById('lightboxImg');
+  const lbCap = document.getElementById('lightboxCaption');
+  const lbCounter = document.getElementById('lightboxCounter');
+  let lbIdx = 0;
+
+  function openLightbox(src) {
+    lbIdx = Math.max(0, galleryItems.findIndex(g => g.src === src));
+    if (lbIdx < 0) lbIdx = 0;
+    renderLB();
+    lb.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function renderLB() {
+    const it = galleryItems[lbIdx];
+    lbImg.src = it.src;
+    lbCap.textContent = it.cap;
+    lbCounter.textContent = String(lbIdx + 1).padStart(2, '0') + ' / ' + String(galleryItems.length).padStart(2, '0');
+  }
+  function closeLightbox() {
+    lb.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  function prevLB() { lbIdx = (lbIdx - 1 + galleryItems.length) % galleryItems.length; renderLB(); }
+  function nextLB() { lbIdx = (lbIdx + 1) % galleryItems.length; renderLB(); }
+
+  document.querySelectorAll('[data-lightbox]').forEach(el => {
+    el.addEventListener('click', () => openLightbox(el.dataset.lightbox));
+  });
+  lb.addEventListener('click', (e) => {
+    if (e.target === lb || e.target === lbImg) closeLightbox();
+  });
+  document.getElementById('lightboxClose').addEventListener('click', closeLightbox);
+  document.getElementById('lightboxPrev').addEventListener('click', (e) => { e.stopPropagation(); prevLB(); });
+  document.getElementById('lightboxNext').addEventListener('click', (e) => { e.stopPropagation(); nextLB(); });
+  document.addEventListener('keydown', (e) => {
+    if (!lb.classList.contains('open')) return;
+    if (e.key === 'Escape') closeLightbox();
+    else if (e.key === 'ArrowLeft') prevLB();
+    else if (e.key === 'ArrowRight') nextLB();
+  });
+
+  /* ------------- Guest steppers ------------- */
+  function setupStepper(id, min, max, initial) {
+    const wrap = document.getElementById(id);
+    const dec = wrap.querySelector('[data-dec]');
+    const inc = wrap.querySelector('[data-inc]');
+    const val = wrap.querySelector('.stepper-value');
+    const input = wrap.querySelector('input[type="hidden"]');
+    let v = initial;
+    function update() {
+      val.textContent = v;
+      input.value = v;
+      dec.disabled = v <= min;
+      inc.disabled = v >= max;
+      recomputeGuestLimits();
+    }
+    dec.addEventListener('click', () => { if (v > min) { v--; update(); } });
+    inc.addEventListener('click', () => { if (v < max) { v++; update(); } });
+    wrap._update = update;
+    wrap._get = () => v;
+    wrap._set = (nv) => { v = Math.max(min, Math.min(max, nv)); update(); };
+    update();
+  }
+  function recomputeGuestLimits() {
+    const a = document.getElementById('adultsStepper');
+    const c = document.getElementById('childrenStepper');
+    if (!a || !c || !a._get || !c._get) return;
+    const av = a._get();
+    const cv = c._get();
+    const remaining = 7 - av;
+    if (cv > remaining) c._set(remaining);
+    // Update child inc disabled state
+    const cInc = c.querySelector('[data-inc]');
+    cInc.disabled = c._get() >= remaining;
+  }
+  setupStepper('adultsStepper', 1, 7, 2);
+  setupStepper('childrenStepper', 0, 5, 0);
+
+  /* date validation handled by custom calendar */
+  const ci = document.getElementById('checkin');
+  const co = document.getElementById('checkout');
+
+  /* ------------- Form submit ------------- */
+  const form = document.getElementById('contactForm');
+  const successBox = document.getElementById('formSuccess');
+
+  function setErr(fieldName, errKey) {
+    const f = form.querySelector('[data-field="' + fieldName + '"]');
+    if (!f) return;
+    f.classList.add('has-error');
+    const e = f.querySelector('.field-error');
+    if (e) e.textContent = T[currentLang][errKey] || errKey;
+  }
+  function clearErrs() {
+    form.querySelectorAll('.has-error').forEach(f => f.classList.remove('has-error'));
+  }
+
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    clearErrs();
+    let ok = true;
+    const name = form.name_.value.trim();
+    const email = form.email.value.trim();
+    const cinv = form.checkin.value;
+    const cov = form.checkout.value;
+    const adults = parseInt(form.adults.value) || 0;
+
+    if (!name) { setErr('name', 'form_err_name'); ok = false; }
+    const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!email || !emailRe.test(email)) { setErr('email', 'form_err_email'); ok = false; }
+    if (!cinv || !cov) { setErr('dates', 'form_err_dates'); ok = false; }
+    else if (cov <= cinv) { setErr('dates', 'form_err_daterange'); ok = false; }
+    if (adults < 1) { setErr('guests', 'form_err_guests'); ok = false; }
+
+    if (!ok) return;
+
+    const btn = form.querySelector('.form-submit');
+    btn.disabled = true;
+    btn.textContent = '…';
+    // Simulate submit
+    setTimeout(() => {
+      form.style.display = 'none';
+      successBox.classList.add('show');
+      btn.disabled = false;
+      btn.textContent = T[currentLang].form_submit;
+    }, 700);
+  });
+
+  document.getElementById('successBack').addEventListener('click', () => {
+    form.reset();
+    form.style.display = '';
+    successBox.classList.remove('show');
+    document.getElementById('adultsStepper')._set(2);
+    document.getElementById('childrenStepper')._set(0);
+  });
+
+  /* ------------- Legal modals ------------- */
+  window.openModal = function(id) {
+    document.getElementById(id).classList.add('open');
+    document.body.style.overflow = 'hidden';
+  };
+  window.closeModal = function(id) {
+    document.getElementById(id).classList.remove('open');
+    document.body.style.overflow = '';
+  };
+  document.querySelectorAll('.legal-modal').forEach(m => {
+    m.addEventListener('click', (e) => { if (e.target === m) closeModal(m.id); });
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      document.querySelectorAll('.legal-modal.open').forEach(m => closeModal(m.id));
+    }
+  });
+
+  /* ------------- Map ------------- */
+  function loadMap() {
+    const container = document.getElementById('mapContainer');
+    if (!container || container._loaded) return;
+    container._loaded = true;
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css';
+    document.head.appendChild(link);
+    const script = document.createElement('script');
+    script.src = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js';
+    script.onload = function() {
+      const mapDiv = document.createElement('div');
+      mapDiv.id = 'leafletMap';
+      mapDiv.style.height = '100%';
+      mapDiv.style.width = '100%';
+      container.appendChild(mapDiv);
+      const map = L.map('leafletMap', { zoomControl: false, attributionControl: false, scrollWheelZoom: false }).setView([46.5406429, 11.6243736], 14);
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 18 }).addTo(map);
+      const goldIcon = L.divIcon({
+        className: 'custom-marker',
+        html: '<div class="marker-label">Chalet <em>Seiser Alm</em></div><div class="marker-dot"></div>',
+        iconSize: [18, 18],
+        iconAnchor: [9, 9]
+      });
+      L.marker([46.5406429, 11.6243736], { icon: goldIcon }).addTo(map);
+      L.control.zoom({ position: 'bottomright' }).addTo(map);
+      L.control.attribution({ position: 'bottomleft', prefix: false })
+        .addAttribution('© <a href="https://openstreetmap.org">OpenStreetMap</a>')
+        .addTo(map);
+    };
+    document.head.appendChild(script);
+  }
+  // Lazy-load map when near viewport
+  const mapObs = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { loadMap(); mapObs.disconnect(); } });
+  }, { rootMargin: '200px' });
+  mapObs.observe(document.getElementById('mapContainer'));
+
+  /* ------------- Snow (seasonal) ------------- */
+  function buildSnow() {
+    const snow = document.getElementById('snow');
+    if (snow.children.length) return;
+    const n = 60;
+    for (let i = 0; i < n; i++) {
+      const s = document.createElement('span');
+      s.style.left = Math.random() * 100 + '%';
+      s.style.width = s.style.height = (2 + Math.random() * 4).toFixed(1) + 'px';
+      s.style.animationDuration = (8 + Math.random() * 10).toFixed(1) + 's';
+      s.style.animationDelay = (-Math.random() * 15).toFixed(1) + 's';
+      s.style.opacity = (0.4 + Math.random() * 0.5).toFixed(2);
+      snow.appendChild(s);
+    }
+  }
+  buildSnow();
+
+  /* ------------- Tweaks ------------- */
+  const DEFAULTS = /*EDITMODE-BEGIN*/{
+    "palette": "warm",
+    "typo": "grotesk",
+    "hero": "fullbleed",
+    "season": "summer"
+  }/*EDITMODE-END*/;
+
+  const state = Object.assign({}, DEFAULTS, JSON.parse(localStorage.getItem('csa_tweaks') || '{}'));
+
+  function applyTweaks() {
+    const b = document.body;
+    b.setAttribute('data-palette', state.palette);
+    b.setAttribute('data-typo', state.typo);
+    b.setAttribute('data-hero', state.hero);
+    b.setAttribute('data-season', state.season);
+    // Update season toggle buttons
+    document.querySelectorAll('[data-season-btn]').forEach(btn => {
+      btn.classList.toggle('active', btn.dataset.seasonBtn === state.season);
+    });
+    // Update tweaks panel actives
+    document.querySelectorAll('.tweak-options button[data-tw]').forEach(btn => {
+      const [grp, val] = btn.dataset.tw.split(':');
+      btn.classList.toggle('active', state[grp] === val);
+    });
+    localStorage.setItem('csa_tweaks', JSON.stringify(state));
+  }
+
+  function setTweak(key, value) {
+    state[key] = value;
+    applyTweaks();
+    try {
+      window.parent.postMessage({ type: '__edit_mode_set_keys', edits: { [key]: value } }, '*');
+    } catch(e) {}
+  }
+
+  document.querySelectorAll('.tweak-options button[data-tw]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const [grp, val] = btn.dataset.tw.split(':');
+      setTweak(grp, val);
+    });
+  });
+  // Nav season toggle
+  document.querySelectorAll('[data-season-btn]').forEach(btn => {
+    btn.addEventListener('click', () => setTweak('season', btn.dataset.seasonBtn));
+  });
+
+  // Edit-mode protocol
+  window.addEventListener('message', (e) => {
+    const d = e.data;
+    if (!d || !d.type) return;
+    if (d.type === '__activate_edit_mode') {
+      document.getElementById('tweaksPanel').classList.add('open');
+    } else if (d.type === '__deactivate_edit_mode') {
+      document.getElementById('tweaksPanel').classList.remove('open');
+    }
+  });
+  try {
+    window.parent.postMessage({ type: '__edit_mode_available' }, '*');
+  } catch(e) {}
+
+  /* ------------- Init ------------- */
+  applyTweaks();
+  applyLang(currentLang);
+  onScroll();
+
+  // Scroll to top on reload
+  if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
 })();
 
-/* ═══════════════════════════════════════
-   NAV SCROLL
-   ═══════════════════════════════════════ */
-const nav = document.getElementById('mainNav');
-window.addEventListener('scroll', () => {
-  nav.classList.toggle('scrolled', window.scrollY > 80);
-}, { passive: true });
-
-/* ═══════════════════════════════════════
-   MOBILE MENU
-   ═══════════════════════════════════════ */
-function toggleMobile() {
-  const menu = document.getElementById('mobileMenu');
-  const hamburger = document.getElementById('hamburger');
-  menu.classList.toggle('open');
-  hamburger.classList.toggle('open');
-  document.body.style.overflow = menu.classList.contains('open') ? 'hidden' : '';
-}
-function closeMobile() {
-  document.getElementById('mobileMenu').classList.remove('open');
-  document.getElementById('hamburger').classList.remove('open');
-  document.body.style.overflow = '';
-}
-
-/* ═══════════════════════════════════════
-   FORM — Erwachsene/Kinder Logik (max 7)
-   ═══════════════════════════════════════ */
-const adultsSelect = document.getElementById('adults');
-const childrenSelect = document.getElementById('children');
-
-adultsSelect.addEventListener('change', () => {
-  const adults = parseInt(adultsSelect.value) || 0;
-  const maxChildren = 7 - adults;
-  const currentChildren = parseInt(childrenSelect.value) || 0;
-  childrenSelect.innerHTML = '';
-  for (let i = 0; i <= maxChildren; i++) {
-    const opt = document.createElement('option');
-    opt.value = i;
-    opt.textContent = i;
-    childrenSelect.appendChild(opt);
-  }
-  if (currentChildren <= maxChildren) {
-    childrenSelect.value = currentChildren;
-  }
-});
-
-async function handleSubmit(e) {
-  e.preventDefault();
-  const form = e.target;
-  const submitBtn = form.querySelector('.form-submit');
-  const originalBtnText = submitBtn.textContent;
-  submitBtn.textContent = '…';
-  submitBtn.disabled = true;
-
-  try {
-    const formData = new FormData(form);
-    const response = await fetch('https://api.web3forms.com/submit', {
-      method: 'POST',
-      body: formData
-    });
-    const result = await response.json();
-    if (result.success) {
-      alert(T[currentLang].form_success);
-      form.reset();
-      // Reset Kinder-Optionen nach Submit
-      childrenSelect.innerHTML = '';
-      for (let i = 0; i <= 5; i++) {
-        const opt = document.createElement('option');
-        opt.value = i;
-        opt.textContent = i;
-        childrenSelect.appendChild(opt);
-      }
-    } else {
-      alert(T[currentLang].form_error);
-    }
-  } catch (err) {
-    alert(T[currentLang].form_error);
-  } finally {
-    submitBtn.textContent = originalBtnText;
-    submitBtn.disabled = false;
-  }
-}
-
-/* ═══════════════════════════════════════
-   FADE-IN (IntersectionObserver)
-   ═══════════════════════════════════════ */
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      entry.target.classList.add('visible');
-      observer.unobserve(entry.target);
-    }
-  });
-}, { threshold: 0.15 });
-
-document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
-
-function loadMaps() {
-  const container = document.getElementById('mapContainer');
-  const consent = document.getElementById('mapsConsent');
-  if (consent) consent.remove();
-
-  // Leaflet CSS + JS laden
-  const link = document.createElement('link');
-  link.rel = 'stylesheet';
-  link.href = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css';
-  document.head.appendChild(link);
-
-  const script = document.createElement('script');
-  script.src = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js';
-  script.onload = function() {
-    const mapDiv = document.createElement('div');
-    mapDiv.id = 'leafletMap';
-    mapDiv.style.height = '100%';
-    mapDiv.style.width = '100%';
-    container.appendChild(mapDiv);
-
-    const map = L.map('leafletMap', {
-      zoomControl: false,
-      attributionControl: false
-    }).setView([46.5406429, 11.6243736], 14);
-
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      maxZoom: 18
-    }).addTo(map);
-
-    // Custom Gold Marker
-    const goldIcon = L.divIcon({
-      className: 'custom-marker',
-      html: '<div class="marker-label">Chalet Seiser Alm</div><div class="marker-dot"></div>',
-      iconSize: [160, 50],
-      iconAnchor: [80, 50]
-    });
-
-    L.marker([46.5406429, 11.6243736], { icon: goldIcon }).addTo(map);
-
-    // Attribution klein unten
-    L.control.attribution({ position: 'bottomright', prefix: false })
-      .addAttribution('© <a href="https://openstreetmap.org">OSM</a>')
-      .addTo(map);
+/* ═══ CUSTOM CALENDAR ═══ */
+(function(){
+  const MONTHS = {
+    de: ['Januar','Februar','März','April','Mai','Juni','Juli','August','September','Oktober','November','Dezember'],
+    it: ['Gennaio','Febbraio','Marzo','Aprile','Maggio','Giugno','Luglio','Agosto','Settembre','Ottobre','Novembre','Dicembre'],
+    en: ['January','February','March','April','May','June','July','August','September','October','November','December']
   };
-  document.head.appendChild(script);
-}
+  function getMonths(){ return MONTHS[document.documentElement.lang] || MONTHS.de; }
+  function fmt(s){ if(!s) return '—'; const [y,m,d]=s.split('-').map(Number); return d+'. '+getMonths()[m-1]+' '+y; }
+  function toStr(d){ return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); }
+  function addDays(d,n){ const r=new Date(d); r.setDate(r.getDate()+n); return r; }
 
-// Karte direkt beim Seitenaufruf laden
-if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', loadMaps);
-} else {
-  loadMaps();
-}
+  const popup      = document.getElementById('calPopup');
+  const grid       = document.getElementById('calGrid');
+  const monthLabel = document.getElementById('calMonthLabel');
+  const prevBtn    = document.getElementById('calPrev');
+  const nextBtn    = document.getElementById('calNext');
+  const hint       = document.getElementById('calHint');
+  const ciHidden   = document.getElementById('checkin');
+  const coHidden   = document.getElementById('checkout');
+  const ciDisplay  = document.getElementById('checkinDisplay');
+  const coDisplay  = document.getElementById('checkoutDisplay');
+  const ciText     = document.getElementById('checkinText');
+  const coText     = document.getElementById('checkoutText');
 
-/* ═══════════════════════════════════════
-   LEGAL MODALS
-   ═══════════════════════════════════════ */
-function openModal(id) {
-  const modal = document.getElementById(id);
-  if (!modal) return;
-  modal.classList.add('open');
-  document.body.style.overflow = 'hidden';
-}
+  const today = new Date(); today.setHours(0,0,0,0);
+  let viewYear  = today.getFullYear();
+  let viewMonth = today.getMonth();
+  let checkinDate  = null;
+  let hoverDate    = null;
+  let step = 0; // 0=pick checkin, 1=pick checkout
 
-function closeModal(id) {
-  const modal = document.getElementById(id);
-  if (!modal) return;
-  modal.classList.remove('open');
-  document.body.style.overflow = '';
-}
-
-// Close modal on backdrop click
-document.querySelectorAll('.legal-modal').forEach(modal => {
-  modal.addEventListener('click', (e) => {
-    if (e.target === modal) closeModal(modal.id);
-  });
-});
-
-// Close modal on Escape
-document.addEventListener('keydown', (e) => {
-  if (e.key === 'Escape') {
-    document.querySelectorAll('.legal-modal.open').forEach(m => closeModal(m.id));
+  /* ── open / close ── */
+  function openCal(anchor){
+    const formRect = document.getElementById('contactForm').getBoundingClientRect();
+    const rect = anchor.getBoundingClientRect();
+    popup.style.top  = (rect.bottom - formRect.top + 8) + 'px';
+    popup.style.left = Math.min(rect.left - formRect.left, formRect.width - 328) + 'px';
+    popup.classList.add('open');
+    renderMonth();
   }
-});
+  function closeCal(){ popup.classList.remove('open'); hoverDate = null; }
+
+  /* ── display click handlers ── */
+  ciDisplay.addEventListener('click', (e) => {
+    e.stopPropagation();
+    if (popup.classList.contains('open')){ closeCal(); return; }
+    // Reset
+    step = 0; checkinDate = null; hoverDate = null;
+    ciHidden.value = ''; coHidden.value = '';
+    ciText.textContent = '—'; coText.textContent = '—';
+    ciText.classList.add('placeholder'); coText.classList.add('placeholder');
+    hint.textContent = 'Sa hervorgehoben · Mindestaufenthalt 4 Nächte';
+    openCal(ciDisplay);
+  });
+  coDisplay.addEventListener('click', (e) => {
+    e.stopPropagation();
+    if (popup.classList.contains('open')){ closeCal(); return; }
+    openCal(coDisplay);
+  });
+
+  /* ── outside click ── */
+  document.addEventListener('click', () => closeCal());
+  popup.addEventListener('click', e => e.stopPropagation());
+
+  /* ── nav ── */
+  prevBtn.addEventListener('click', () => { viewMonth--; if(viewMonth<0){viewMonth=11;viewYear--;} renderMonth(); });
+  nextBtn.addEventListener('click', () => { viewMonth++; if(viewMonth>11){viewMonth=0;viewYear++;} renderMonth(); });
+
+  /* ── render ── */
+  function renderMonth(){
+    monthLabel.textContent = getMonths()[viewMonth] + ' ' + viewYear;
+    grid.innerHTML = '';
+
+    const first = new Date(viewYear, viewMonth, 1);
+    let startDow = first.getDay();
+    startDow = startDow === 0 ? 6 : startDow - 1;
+    const daysInMonth = new Date(viewYear, viewMonth+1, 0).getDate();
+
+    const minCo = checkinDate ? toStr(addDays(checkinDate, 4)) : null;
+
+    // empty
+    for(let i=0;i<startDow;i++){
+      const el=document.createElement('div'); el.className='cal-day empty'; grid.appendChild(el);
+    }
+
+    grid.onmouseleave = () => {
+      if(step===1 && hoverDate){ hoverDate=null; updateHighlights(); }
+    };
+
+    for(let d=1;d<=daysInMonth;d++){
+      const date = new Date(viewYear, viewMonth, d);
+      const dateStr = toStr(date);
+      const isSat = date.getDay()===6;
+      const isPast = date < today;
+      const isTooClose = step===1 && checkinDate && date <= checkinDate;
+      const isBlocked  = step===1 && checkinDate && minCo && dateStr < minCo;
+
+      const el = document.createElement('div');
+      el.className = 'cal-day';
+      el.textContent = d;
+      el.dataset.date = dateStr;
+
+      if(isPast || isTooClose || isBlocked){
+        el.classList.add('past');
+      } else {
+        if(isSat) el.classList.add('saturday');
+        el.style.cursor = 'pointer';
+        el.addEventListener('click', (e) => { e.stopPropagation(); selectDate(date); });
+        el.addEventListener('mouseenter', () => {
+          if(step===1){
+            const s = toStr(date);
+            if(!hoverDate || toStr(hoverDate) !== s){
+              hoverDate = date;
+              updateHighlights();
+            }
+          }
+        });
+      }
+
+      grid.appendChild(el);
+    }
+
+    updateHighlights();
+  }
+
+  /* ── lightweight highlight update (no DOM rebuild → no flicker, no lost clicks) ── */
+  function updateHighlights(){
+    const previewEnd = hoverDate ? toStr(hoverDate) : null;
+    const ciStr = checkinDate ? toStr(checkinDate) : null;
+    grid.querySelectorAll('.cal-day').forEach(el => {
+      const dateStr = el.dataset.date;
+      if(!dateStr) return;
+      el.classList.remove('checkin-day', 'checkout-day', 'in-range');
+      if(ciStr === dateStr){
+        el.classList.add('checkin-day');
+        el.classList.remove('past');
+      } else if(step===1 && previewEnd && dateStr===previewEnd){
+        el.classList.add('checkout-day');
+      } else if(step===1 && ciStr && previewEnd && dateStr>ciStr && dateStr<previewEnd){
+        el.classList.add('in-range');
+      }
+    });
+  }
+
+  /* ── select ── */
+  function selectDate(date){
+    if(step===0){
+      // pick checkin
+      checkinDate = date;
+      ciHidden.value = toStr(date);
+      coHidden.value = '';
+      ciText.textContent = fmt(toStr(date));
+      coText.textContent = '—';
+      ciText.classList.remove('placeholder');
+      coText.classList.add('placeholder');
+      step = 1;
+      hint.textContent = 'Abreise wählen — mind. 4 Nächte';
+      renderMonth();
+    } else {
+      // pick checkout
+      coHidden.value = toStr(date);
+      coText.textContent = fmt(toStr(date));
+      coText.classList.remove('placeholder');
+      const df = document.querySelector('[data-field="dates"]');
+      if(df) df.classList.remove('has-error');
+      step = 0;
+      hoverDate = null;
+      renderMonth();
+      setTimeout(closeCal, 250);
+    }
+  }
+
+  // placeholder init
+  ciText.classList.add('placeholder');
+  coText.classList.add('placeholder');
+  document.getElementById('contactForm').style.position = 'relative';
+})();
+
+
 </script>
 
-</body>
-</html>
+
+</body></html>

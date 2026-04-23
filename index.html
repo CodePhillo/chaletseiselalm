@@ -1557,10 +1557,14 @@ body[data-season="winter"] .snow { display: block; }
       </div>
     </div>
 
-    <form class="contact-form fade-in" id="contactForm" novalidate="">
+    <form class="contact-form fade-in" id="contactForm" action="https://api.web3forms.com/submit" method="POST" novalidate="">
+      <input type="hidden" name="access_key" value="33e7bdd7-186b-4ef3-9cec-3e84ba94b6a1">
+      <input type="hidden" name="subject" value="Neue Anfrage – Chalet Seiser Alm">
+      <input type="hidden" name="from_name" value="Chalet Seiser Alm Website">
+      <input type="checkbox" name="botcheck" style="display:none" tabindex="-1" autocomplete="off">
       <div class="form-field" data-field="name">
         <label for="name" data-i18n="form_name">Name</label>
-        <input type="text" id="name" name="name_" autocomplete="name">
+        <input type="text" id="name" name="name" autocomplete="name">
         <span class="field-error"></span>
       </div>
       <div class="form-field" data-field="email">
@@ -1766,6 +1770,7 @@ window.T = {
     form_err_dates: 'Bitte wählen Sie An- und Abreisedaten.',
     form_err_daterange: 'Abreise muss nach der Anreise liegen.',
     form_err_guests: 'Mindestens 1 Gast ist erforderlich.',
+    form_error: 'Das hat leider nicht geklappt. Bitte später erneut versuchen oder uns direkt per E-Mail oder WhatsApp kontaktieren.',
     form_success_title: 'Vielen Dank',
     form_success_text: 'Ihre Anfrage ist bei uns eingegangen. Wir melden uns innerhalb von 24 Stunden mit Verfügbarkeit und einem persönlichen Angebot.',
     form_success_back: 'Neue Anfrage stellen',
@@ -1827,6 +1832,7 @@ window.T = {
     form_err_dates: 'Seleziona le date di arrivo e partenza.',
     form_err_daterange: 'La partenza deve essere dopo l\'arrivo.',
     form_err_guests: 'È richiesto almeno 1 ospite.',
+    form_error: 'Purtroppo non è riuscito. Riprova più tardi o contattaci direttamente via e-mail o WhatsApp.',
     form_success_title: 'Grazie',
     form_success_text: 'Abbiamo ricevuto la vostra richiesta. Vi risponderemo entro 24 ore con disponibilità e un\'offerta personalizzata.',
     form_success_back: 'Nuova richiesta',
@@ -1888,6 +1894,7 @@ window.T = {
     form_err_dates: 'Please select check-in and check-out dates.',
     form_err_daterange: 'Check-out must be after check-in.',
     form_err_guests: 'At least 1 guest is required.',
+    form_error: 'That didn\'t work. Please try again later, or reach us directly by email or WhatsApp.',
     form_success_title: 'Thank you',
     form_success_text: 'Your enquiry has reached us. We will respond within 24 hours with availability and a personal offer.',
     form_success_back: 'Send another enquiry',
@@ -2098,11 +2105,11 @@ window.T = {
     form.querySelectorAll('.has-error').forEach(f => f.classList.remove('has-error'));
   }
 
-  form.addEventListener('submit', (e) => {
+  form.addEventListener('submit', async (e) => {
     e.preventDefault();
     clearErrs();
     let ok = true;
-    const name = form.name_.value.trim();
+    const name = form.elements['name'].value.trim();
     const email = form.email.value.trim();
     const cinv = form.checkin.value;
     const cov = form.checkout.value;
@@ -2118,15 +2125,29 @@ window.T = {
     if (!ok) return;
 
     const btn = form.querySelector('.form-submit');
+    const originalBtn = btn.textContent;
     btn.disabled = true;
     btn.textContent = '…';
-    // Simulate submit
-    setTimeout(() => {
-      form.style.display = 'none';
-      successBox.classList.add('show');
+
+    try {
+      const formData = new FormData(form);
+      const response = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        body: formData
+      });
+      const result = await response.json();
+      if (result.success) {
+        form.style.display = 'none';
+        successBox.classList.add('show');
+      } else {
+        alert((T[currentLang] && T[currentLang].form_error) || 'Senden fehlgeschlagen. Bitte später erneut versuchen.');
+      }
+    } catch (err) {
+      alert((T[currentLang] && T[currentLang].form_error) || 'Senden fehlgeschlagen. Bitte später erneut versuchen.');
+    } finally {
       btn.disabled = false;
-      btn.textContent = T[currentLang].form_submit;
-    }, 700);
+      btn.textContent = (T[currentLang] && T[currentLang].form_submit) || originalBtn;
+    }
   });
 
   document.getElementById('successBack').addEventListener('click', () => {
